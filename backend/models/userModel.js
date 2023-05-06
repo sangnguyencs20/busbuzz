@@ -12,6 +12,9 @@ const UserSchema = new mongoose.Schema({
     fullname: {
         type: String,
         required: [true, 'Please enter a name'],
+    },
+    history:{
+        type: [mongoose.Schema.Types.ObjectId],
     }
 },
 {
