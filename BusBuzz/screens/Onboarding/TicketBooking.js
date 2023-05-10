@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text } from "react-native-paper";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, BackHandler } from "react-native";
 
 const TicketBooking = ({ navigation }) => {
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+        return () => backHandler.remove()
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <Image source={require('../../assets/onboarding/ob1.png')} style={styles.img} />

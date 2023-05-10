@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text } from "react-native-paper";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, BackHandler } from "react-native";
 
 const Security = ({ navigation }) => {
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+        return () => backHandler.remove()
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <Image source={require('../../assets/onboarding/ob3.png')} style={styles.img} />
