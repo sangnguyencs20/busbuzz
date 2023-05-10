@@ -7,11 +7,11 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Please enter a password'],
+        required: [true, 'Please enter a password']
     },
-    fullname: {
+    fullName: {
         type: String,
-        required: [true, 'Please enter a name'],
+        required: [true, 'Please enter your name']
     },
     history:{
         type: [mongoose.Schema.Types.ObjectId],

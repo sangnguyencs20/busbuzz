@@ -59,4 +59,14 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+router.get('/:id/ticket', async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.id);
+        res.json(user.ticket);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
+
 module.exports = router;
