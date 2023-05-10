@@ -8,6 +8,10 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+//For theme
+import LightTheme from './theme/LightTheme';
+import DarkTheme from './theme/DarkTheme';
+
 // Onboarding screens
 import TicketBooking from './screens/Onboarding/TicketBooking';
 import Security from './screens/Onboarding/Security';
@@ -30,7 +34,7 @@ const clearAsyncStorage = async () => {
 };
 
 function App() {
-  // clearAsyncStorage();
+  clearAsyncStorage();
   const Stack = createNativeStackNavigator();
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -51,8 +55,8 @@ function App() {
     return null; // Show nothing while determining the first launch
   } else if (isFirstLaunch === true) {
     return (
-      <PaperProvider>
-        <NavigationContainer>
+      <PaperProvider theme={DarkTheme}>
+        <NavigationContainer theme={DarkTheme}>
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
