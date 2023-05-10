@@ -2,21 +2,35 @@ POST http://localhost:3000/login/
 Content-Type: application/json
 
 {
-    "username": "user"
+    "username": "svn",
+    "password": "123456"
+}
+
+
+###
+
+
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+    "username": "sangnv",
+    "password": "123456",
+    "fullName": "Sang Vinh Nguyen"
 }
 
 
 ###
 
 GET http://localhost:3000/routes/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjgzNTMyMDkyLCJleHAiOjE2ODM2MTg0OTJ9.Bo1ziSFTW3RNMnGCUFU3l5szAziFYntf_C8Eux30biU
-###
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjgzNzA2MTcwLCJleHAiOjE2ODM3OTI1NzB9.ZVdM0JOOTuAzyXg5Oqtkgc_4rE51IT29CXn6Z3aWlG4
+
 
 POST http://localhost:3000/token/
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjgzNTMyMDkyLCJleHAiOjE2ODQxMzY4OTJ9.p114aQGfSbwYvqRbUO6BY0ymtejVuLDBgn8DyITI0Wo"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjgzNzA0NjkxLCJleHAiOjE2ODQzMDk0OTF9.BcazgdB2d1ZHihY3kDDiRCkYHooXDW3GwiulOvYvpLw"
 }
 
 ###

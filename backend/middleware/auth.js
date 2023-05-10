@@ -5,21 +5,23 @@ const verifyToken = (req, res, next) => {
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-        return res.sendStatus(401).json({
+        return res.status(401).json({
             message: 'Invalid token'
-        })
+        });
     }
 
     try {
         const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-        console.log(decoded)
+        console.log(decoded);
         req.userId = decoded.id;
         next();
-    }
-    catch (error) {
-        console.log(error)
+    } catch (error) {
+        console.log(error);
         return res.sendStatus(403);
     }
-}
+};
+
+module.exports = verifyToken;
+
 
 module.exports = verifyToken;
