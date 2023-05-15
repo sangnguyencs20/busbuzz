@@ -34,7 +34,7 @@ const clearAsyncStorage = async () => {
 };
 
 function App() {
-  clearAsyncStorage();
+  // clearAsyncStorage();
   const Stack = createNativeStackNavigator();
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -55,8 +55,8 @@ function App() {
     return null; // Show nothing while determining the first launch
   } else if (isFirstLaunch === true) {
     return (
-      <PaperProvider theme={DarkTheme}>
-        <NavigationContainer theme={DarkTheme}>
+      <PaperProvider theme={LightTheme}>
+        <NavigationContainer theme={LightTheme}>
           <Stack.Navigator
             screenOptions={{
               headerShown: false,

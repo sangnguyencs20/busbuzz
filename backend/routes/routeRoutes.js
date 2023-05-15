@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const RouteModel = require('../models/routeModel');
 
@@ -23,12 +24,27 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.post('/search', async (req, res) => {
+    try {
+        const { start, end } = req.body;
+        const routes = await RouteModel.find({ places: { $all: [start, end] } })
+            .populate('places')
+            .exec();
+
+        res.json(routes);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+
 router.post('/', async (req, res) => {
     const route = new RouteModel({
         price: req.body.price,
-        start: req.body.start,
-        end: req.body.end,
         timeline: req.body.timeline,
+        places: req.body.places
     });
     try {
         const newRoute = await route.save();
@@ -42,9 +58,8 @@ router.patch('/:id', async (req, res) => {
     try {
         const route = await RouteModel.findById(req.params.id);
         route.price = req.body.price;
-        route.start = req.body.start;
-        route.end = req.body.end;
         route.timeline = req.body.timeline;
+        route.places = req.body.places;
         const updatedRoute = await route.save();
         res.json(updatedRoute);
     } catch (err) {
@@ -61,5 +76,11 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+
+
+
+
+
 
 module.exports = router;

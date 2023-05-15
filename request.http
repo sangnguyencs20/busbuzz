@@ -23,7 +23,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/routes/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjgzNzA2MTcwLCJleHAiOjE2ODM3OTI1NzB9.ZVdM0JOOTuAzyXg5Oqtkgc_4rE51IT29CXn6Z3aWlG4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MDQ2MzEwLCJleHAiOjE2ODQxMzI3MTB9.ccX2Fu8TyIo0XEahKZiFbO3aIsgAek4n1QNB78ABCqA
 
 
 POST http://localhost:3000/token/
@@ -31,6 +31,52 @@ Content-Type: application/json
 
 {
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJ1c2VyIiwiaWF0IjoxNjgzNzA0NjkxLCJleHAiOjE2ODQzMDk0OTF9.BcazgdB2d1ZHihY3kDDiRCkYHooXDW3GwiulOvYvpLw"
+}
+
+###
+
+GET http://localhost:3000/busStops/search/Đại%20Học
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MDczMTI5LCJleHAiOjE2ODQxNTk1Mjl9.MLsyMrvlJbBRwnndfbLW3LNhcntHDuZd6BO3OSl6Yxs
+
+###
+POST http://localhost:3000/routes/search
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MTE5MDc5LCJleHAiOjE2ODQyMDU0Nzl9.wtt9OO94QECz7-XcHI40_OY5X1O50JvBEZMHPeL5_eM
+Content-Type: application/json
+
+{
+  "start": "64607f81128f9cff725040fd",
+  "end": "64608317128f9cff725040fe"
+}
+
+
+
+###
+
+GET http://localhost:3000/routes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MTE5MDc5LCJleHAiOjE2ODQyMDU0Nzl9.wtt9OO94QECz7-XcHI40_OY5X1O50JvBEZMHPeL5_eM
+
+###
+POST http://localhost:3000/routes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MTE5MDc5LCJleHAiOjE2ODQyMDU0Nzl9.wtt9OO94QECz7-XcHI40_OY5X1O50JvBEZMHPeL5_eM
+Content-Type: application/json
+
+{
+  "_id": "64608f9f128f9cff72504100",
+  "price": 7000,
+  "start": "64607f81128f9cff725040fd",
+  "end": "64608317128f9cff725040fe",
+  "timeline": [
+    "12:05",
+    "12:10",
+    "12:20",
+    "12:30"
+  ],
+  "places": [
+    "Stop 1",
+    "Stop 2",
+    "Stop 3",
+    "Stop 4"
+  ]
 }
 
 ###
