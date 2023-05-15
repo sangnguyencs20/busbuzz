@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const verifyToken = require('./middleware/auth');
 const User = require('./models/userModel');
 const bcrypt = require('bcrypt');
+const cors = require('cors');
+
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('Connected to database');
@@ -17,6 +19,7 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
 
 
 app.use(express.json());
+app.use(cors());
 
 const userRouter = require('./routes/userRoutes');
 const routeRouter = require('./routes/routeRoutes');
@@ -84,7 +87,8 @@ app.post('/login', async (req, res) => {
 
         const tokens = generateTokens(user);
         updateRefreshToken(username, tokens.refreshToken);
-        res.json(tokens);
+        
+        return res.status(200).json({ ...tokens, user });
     } catch (error) {
         console.error('Error during login:', error);
         res.sendStatus(500);

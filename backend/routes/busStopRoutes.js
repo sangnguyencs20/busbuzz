@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
+        description: req.body.description
     });
     try {
         const newBusStop = await busStop.save();
@@ -42,6 +43,7 @@ router.patch('/:id', async (req, res) => {
         busStop.name = req.body.name;
         busStop.latitude = req.body.latitude;
         busStop.longitude = req.body.longitude;
+        busStop.description = req.body.description;
         const updatedBusStop = await busStop.save();
         res.json(updatedBusStop);
     } catch (err) {
@@ -59,4 +61,13 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+router.get('/search/:name', async (req, res) => {
+    try {
+        const searchTerm = decodeURIComponent(req.params.name);
+        const busStop = await BusStopModel.find({ name: { $regex: searchTerm, $options: 'i' } });
+        res.json(busStop);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 module.exports = router;
