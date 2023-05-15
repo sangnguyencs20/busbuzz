@@ -2,6 +2,10 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { API_URL } from '@env';
+
+const loginUrl = `${API_URL}/login`;
+
 import {
   View,
   StyleSheet,
@@ -43,7 +47,7 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
   async function handleLogin() {
         try {
-            const response = await axios.post('http://192.168.3.206:3000/login', {
+            const response = await axios.post(loginUrl, {
                 username,
                 password
             });
