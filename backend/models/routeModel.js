@@ -1,20 +1,17 @@
 const mongoose = require('mongoose');
 const RouteSchema = new mongoose.Schema({
-    price:{
+    price: {
         type: Number,
         required: [true, 'Please enter a price'],
     },
-    start: {
-        type: String,
-        required: [true, 'Please enter a start'],
-    },
-    end: {
-        type: String,
-        required: [true, 'Please enter an end'],
-    },
     timeline: {
-        type: [mongoose.Schema.Types.String],
+        type: [String],
         required: [true, 'Please enter a timeline'],
+    },
+    places: {
+        type: [{ type: mongoose.Schema.Types.String, ref: 'BusStop'}],
+
+        required: [true, 'Please enter a places'],
     }
 });
 

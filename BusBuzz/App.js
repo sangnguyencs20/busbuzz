@@ -33,7 +33,7 @@ const clearAsyncStorage = async () => {
 };
 
 function App() {
-  clearAsyncStorage();
+  // clearAsyncStorage();
   const Stack = createNativeStackNavigator();
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
