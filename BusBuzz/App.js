@@ -9,13 +9,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //For theme
-import LightTheme from './theme/LightTheme';
-import DarkTheme from './theme/DarkTheme';
+import LightTheme from './assets/theme/LightTheme';
+import DarkTheme from './assets/theme/DarkTheme';
 
 // Onboarding screens
-import TicketBooking from './screens/Onboarding/TicketBooking';
-import Security from './screens/Onboarding/Security';
-import Service from './screens/Onboarding/Service';
+import OnboardingScreen from './screens/Onboarding/Onboarding';
 
 // Authentication screens
 import SignUpScreen from './screens/Signup';
@@ -23,6 +21,7 @@ import LoginScreen from './screens/Login';
 
 //App screens
 import HomeScreen from './screens/Home';
+import SearchScreen from './screens/SearchScreen';
 
 const clearAsyncStorage = async () => {
   try {
@@ -39,7 +38,6 @@ function App() {
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
 
-  // Check if the app is launched for the first time
   useEffect(() => {
     AsyncStorage.getItem('alreadyLaunched').then((value) => {
       if (value === null) {
@@ -51,10 +49,8 @@ function App() {
     });
   }, []);
 
-  if (isFirstLaunch === null) {
-    return null; // Show nothing while determining the first launch
-  } else if (isFirstLaunch === true) {
-    return (
+  return (
+    isFirstLaunch !== null && (
       <PaperProvider theme={LightTheme}>
         <NavigationContainer theme={LightTheme}>
           <Stack.Navigator
@@ -62,40 +58,24 @@ function App() {
               headerShown: false,
               animationEnabled: true,
             }}
-            initialRouteName='TicketBooking'
+            initialRouteName={isFirstLaunch ? "OnboardingScreen" : "LoginScreen"}
           >
-            <Stack.Group>
-              <Stack.Screen name="TicketBooking" component={TicketBooking} />
-              <Stack.Screen name="Security" component={Security} />
-              <Stack.Screen name="Service" component={Service} />
-            </Stack.Group>
+            {isFirstLaunch && (
+              <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+            )}
 
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+
+            {isFirstLaunch && (
+              <Stack.Screen name="SearchScreen" component={SearchScreen} />
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
-    );
-  } else {
-    return (
-      <PaperProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              animationEnabled: true,
-            }}
-            initialRouteName='LoginScreen'
-          >
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    );
-  }
+    )
+  );
 };
 
 export default App;
