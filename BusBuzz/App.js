@@ -58,7 +58,7 @@ function App() {
               headerShown: false,
               animationEnabled: true,
             }}
-            initialRouteName={isFirstLaunch ? "OnboardingScreen" : "LoginScreen"}
+            initialRouteName={isFirstLaunch ? "OnboardingScreen" : "SearchScreen"}
           >
             {isFirstLaunch && (
               <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -68,9 +68,7 @@ function App() {
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
-            {isFirstLaunch && (
-              <Stack.Screen name="SearchScreen" component={SearchScreen} />
-            )}
+            <Stack.Screen name="SearchScreen" component={SearchScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
