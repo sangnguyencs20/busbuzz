@@ -1,17 +1,35 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchType, swapLocations } from '../../reducers/searchReducer';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text, Searchbar, Surface, IconButton } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
-    const [departure, setDeparture] = useState('');
-    const [destination, setDestination] = useState('');
+    const dispatch = useDispatch();
 
-    const handleSwap = () => {
-        const temp = departure;
-        setDeparture(destination);
-        setDestination(temp);
-    }
+    const departure = useSelector((state) => state.search.departure.name.toString());
+    const destination = useSelector((state) => state.search.destination.name.toString());
+
+    const handleSearchbarPress = (payload) => {
+        if (payload === 'departure') {
+            dispatch(setSearchType(true));
+        } else {
+            dispatch(setSearchType(false));
+        }
+        navigation.navigate('SearchScreen');
+    };
+
+    const handleSwapLocations = () => {
+        dispatch(swapLocations());
+    };
+
+    const truncateInput = (input, maxLength) => {
+        if (input.length > maxLength) {
+            return input.substring(0, maxLength) + "...";
+        }
+        return input;
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -24,14 +42,14 @@ const HomeScreen = ({ navigation }) => {
                     <IconButton
                         icon="crosshairs-gps"
                         size={24}
-                        onPress={() => console.log('Pressed')}
+                        onPress={() => console.log('Current location button pressed')}
                     />
                 </View>
                 <Searchbar
                     placeholder="Vị trí hiện tại"
-                    value={departure}
-                    onIconPress={() => navigation.navigate('SearchScreen')}
-                    onChangeText={setDeparture}
+                    value={truncateInput(departure, 25)}
+                    onIconPress={() => handleSearchbarPress('departure')}
+                    onChangeText={(text) => { }}
                     style={styles.searchbar}
                 />
                 <View style={styles.label}>
@@ -39,14 +57,14 @@ const HomeScreen = ({ navigation }) => {
                     <IconButton
                         icon="swap-vertical"
                         size={24}
-                        onPress={handleSwap}
+                        onPress={() => handleSwapLocations()}
                     />
                 </View>
                 <Searchbar
                     placeholder="Nơi đến"
-                    onIconPress={() => navigation.navigate('SearchScreen')}
-                    value={destination}
-                    onChangeText={setDestination}
+                    onIconPress={() => handleSearchbarPress('destination')}
+                    value={truncateInput(destination, 25)}
+                    onChangeText={(text) => { }}
                     style={styles.searchbar}
                 />
                 <Button

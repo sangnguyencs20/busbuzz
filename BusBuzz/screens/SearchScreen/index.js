@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Searchbar, List, Divider } from "react-native-paper";
+import { Searchbar, List, } from "react-native-paper";
 import { StyleSheet, FlatList } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { setDeparture, setDestination } from '../../reducers/searchReducer';
 
 import data from "./data";
 
 const SearchScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const isDepartureSearch = useSelector((state) => state.search.isDepartureSearch);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    // const renderSeparator = () => <Divider style={styles.separator} />;
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -25,6 +28,15 @@ const SearchScreen = ({ navigation }) => {
         });
 
         setSearchResults(filteredData);
+    };
+
+    const handleLocationSelect = (location) => {
+        if (isDepartureSearch) {
+            dispatch(setDeparture(location));
+        } else {
+            dispatch(setDestination(location));
+        }
+        navigation.navigate('HomeScreen');
     };
 
     return (
@@ -44,10 +56,9 @@ const SearchScreen = ({ navigation }) => {
                     <List.Item
                         title={item.name}
                         description={item.address}
-                        onPress={() => navigation.navigate('HomeScreen')}
+                        onPress={() => handleLocationSelect(item)}
                     />
                 )}
-            // ItemSeparatorComponent={renderSeparator}
             />
         </SafeAreaView>
     )
