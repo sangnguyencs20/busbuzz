@@ -24,6 +24,9 @@ import LoginScreen from './screens/Login';
 //App screens
 import HomeScreen from './screens/Home';
 import SearchScreen from './screens/SearchScreen';
+import Payment from './screens/Payment/Payment';
+import PaymentChoice from './screens/Payment/PaymentChoice';
+import PaymentSuccess from './screens/Payment/PaymentSuccess';
 
 const clearAsyncStorage = async () => {
   try {
@@ -72,6 +75,10 @@ function App() {
               <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
               <Stack.Screen name="SearchScreen" component={SearchScreen} />
+              
+              <Stack.Screen name="Payment" component={Payment} />
+              <Stack.Screen name="PaymentChoice" component={PaymentChoice} />
+              <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
             </Stack.Navigator>
           </NavigationContainer>
         </PaperProvider>
