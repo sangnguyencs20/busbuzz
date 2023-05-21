@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Provider } from 'react-redux';
+import store from './store';
 
 //Our beloved RNP, of course!
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -51,27 +53,29 @@ function App() {
 
   return (
     isFirstLaunch !== null && (
-      <PaperProvider theme={LightTheme}>
-        <NavigationContainer theme={LightTheme}>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              animationEnabled: true,
-            }}
-            initialRouteName={isFirstLaunch ? "OnboardingScreen" : "SearchScreen"}
-          >
-            {isFirstLaunch && (
-              <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
-            )}
+      <Provider store={store}>
+        <PaperProvider theme={LightTheme}>
+          <NavigationContainer theme={LightTheme}>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                animationEnabled: true,
+              }}
+              initialRouteName={isFirstLaunch ? "OnboardingScreen" : "HomeScreen"}
+            >
+              {isFirstLaunch && (
+                <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+              )}
 
-            <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+              <Stack.Screen name="LoginScreen" component={LoginScreen} />
+              <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+              <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
-            <Stack.Screen name="SearchScreen" component={SearchScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
+              <Stack.Screen name="SearchScreen" component={SearchScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </Provider>
     )
   );
 };
