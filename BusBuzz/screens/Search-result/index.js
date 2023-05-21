@@ -19,10 +19,10 @@ import BusCard from "../../components/BusInfoCard";
 const SeachResultScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      {/* <BusCard />
       <BusCard />
       <BusCard />
-      <BusCard />
-      <BusCard />
+      <BusCard /> */}
     </View>
   );
 };
