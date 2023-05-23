@@ -117,7 +117,11 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.createAccountText}>Bạn chưa có tài khoản?</Text>
             <TouchableRipple
               onPress={() => {
-                navigation.navigate("Signup");
+<<<<<<< Updated upstream
+                navigation.navigate("SignUpScreen");
+=======
+                navigation.navigate("SignupScreen");
+>>>>>>> Stashed changes
               }}
             >
               <Text style={styles.createAccountLink}>Tạo mới tại đây</Text>
@@ -155,6 +159,8 @@ const styles = StyleSheet.create({
   },
   img: {
     marginBottom: 20,
+    height: 235,
+    width: 307,
   },
   title: {
     alignSelf: "flex-start",
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordContainer: {
     alignSelf: "flex-end",
-    marginBottom: 15,
+    marginBottom: 10,
   },
   forgotPasswordText: {
     fontWeight: "bold",

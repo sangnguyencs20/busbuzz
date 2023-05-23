@@ -21,7 +21,7 @@ const Payment = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <IconButton mode="outlined" style={styles.goBack} icon='arrow-left' size={30} />
+      <IconButton style={styles.goBack} icon='arrow-left' size={30} />
       <View style={styles.topCircle}>
         <Avatar.Icon icon="ticket" size={80} />
       </View>
@@ -49,24 +49,24 @@ const Payment = ({
               <Text style={styles.timeValue}>08:30</Text>
             </View>
           </View>
-          <Card style={styles.busCard}>
+          <Card mode='contained' style={styles.busCard}>
             <Avatar.Icon icon="bus" size={40} style={{ alignSelf: "center" }} />
             <View style={styles.busInfo}>
               <Text style={styles.busNumber}>Tuyến 99</Text>
               <Text style={styles.busLine}>
                 Đại học Bách Khoa CS2 - Đại học Bách Khoa CS1
               </Text>
-              <Button mode='contained' style={styles.price}>150.000 đ</Button>
+              <Button mode='contained' style={styles.price}>15.000 đ</Button>
             </View>
           </Card>
         </View>
       </Card>
       <View style={styles.buttons}>
       <Button mode='contained' style={styles.paymentMethod} icon='wallet'>
-        <Text>Chọn phương thức thanh toán</Text>
+        Chọn phương thức thanh toán
       </Button>
       <Button mode='contained' style={styles.payment}>
-        <Text>Thanh toán</Text>
+        Thanh toán
       </Button>
       </View>
     </SafeAreaView>
@@ -81,25 +81,28 @@ const styles = StyleSheet.create({
   },
   goBack: {
     position: "absolute",
-    top: 3,
+    top: 20,
     left: 5,
     zIndex: 1,
   },
 
   topCircle: {
     position: "absolute",
-    top: 15,
+    top: 30,
     zIndex: 1,
   },
   cardContainer: {
     width: "90%",
+    height: 600,
     marginVertical: 10,
     position: "absolute",
-    top: 45,
-    paddingTop: 60,
+    top: 60,
+    // paddingTop: 60,
+    
   },
   upperSection: {
     alignItems: "center",
+    paddingTop: 60,
   },
   upperText1: {
     fontSize: 20,
@@ -183,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     // textColor: "red",
-    width: '40%',
+    width: '80%',
   },
   buttons: {
     position: 'absolute',
