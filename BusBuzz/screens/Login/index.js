@@ -155,6 +155,8 @@ const styles = StyleSheet.create({
   },
   img: {
     marginBottom: 20,
+    height: 235,
+    width: 307,
   },
   title: {
     alignSelf: "flex-start",
