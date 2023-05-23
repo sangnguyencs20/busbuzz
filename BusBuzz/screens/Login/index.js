@@ -117,7 +117,11 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.createAccountText}>Bạn chưa có tài khoản?</Text>
             <TouchableRipple
               onPress={() => {
+<<<<<<< Updated upstream
                 navigation.navigate("SignUpScreen");
+=======
+                navigation.navigate("SignupScreen");
+>>>>>>> Stashed changes
               }}
             >
               <Text style={styles.createAccountLink}>Tạo mới tại đây</Text>
