@@ -14,7 +14,7 @@ import {
   Snackbar,
 } from "react-native-paper";
 
-import BusCard from "../../components/BusInfoCard";
+import BusCard from "../../components/BusCard";
 
 const SeachResultScreen = ({ navigation }) => {
   return (
