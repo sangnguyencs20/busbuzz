@@ -12,7 +12,7 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     const navigateToLogin = () => {
-        navigation.navigate('Login'); // Replace 'Login' with the name of your login screen component
+        navigation.navigate('LoginScreen'); // Replace 'Login' with the name of your login screen component
     };
 
     return (
