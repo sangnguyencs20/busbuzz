@@ -4,11 +4,17 @@ const BusStopSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter a name'],
     },
-    coordinate: {
-        type: [mongoose.Schema.Types.Number],
-        required: [true, 'Please enter a coordinate'],
+    address : {
+        type: String,
+        required: [true, 'Please enter an address'],
     },
-    description:{
+    latitude:{
+        type: Number,
+    },
+    longitude:{
+        type: Number,
+    },
+    address:{
         type: String,
         required: [true, 'Please enter a description'],
     }

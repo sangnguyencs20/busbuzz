@@ -25,6 +25,7 @@ const Payment = ({
         style={styles.goBack}
         icon='arrow-left'
         size={30} />
+
       <View style={styles.topCircle}>
         <Avatar.Icon icon="ticket" size={80} />
       </View>
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
   },
   upperSection: {
     alignItems: "center",
+    paddingTop: 60,
   },
   line: {
     // width: "100%",

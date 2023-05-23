@@ -117,7 +117,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.createAccountText}>Bạn chưa có tài khoản?</Text>
             <TouchableRipple
               onPress={() => {
-                navigation.navigate("SignUpScreen");
+                navigation.navigate("SignupScreen");
               }}
             >
               <Text style={styles.createAccountLink}>Tạo mới tại đây</Text>
@@ -155,6 +155,8 @@ const styles = StyleSheet.create({
   },
   img: {
     marginBottom: 20,
+    height: 235,
+    width: 307,
   },
   title: {
     alignSelf: "flex-start",
