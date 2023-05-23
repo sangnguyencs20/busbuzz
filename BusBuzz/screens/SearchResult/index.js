@@ -25,10 +25,17 @@ const SeachResultScreen = ({ navigation }) => {
   const idDestination = useSelector((state) => state.search.destination.id);
 
   console.log(idDeparture, idDestination);
+
   const searchData = {
-    start: "64607f81128f9cff725040fd",
-    end: "64608317128f9cff725040fe",
+    start: idDeparture,
+    end: idDestination,
   };
+
+  // Hard code for testing
+  // const searchData = {
+  //   start: "64607f81128f9cff725040fd",
+  //   end: "64608317128f9cff725040fe",
+  // };
 
   useEffect(() => {
     async function fetchBusInfo() {
