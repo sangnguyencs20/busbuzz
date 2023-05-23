@@ -22,23 +22,23 @@ import {
   Snackbar,
 } from "react-native-paper";
 function showAlertModal(title, message) {
-    Alert.alert(title, message);
+  Alert.alert(title, message);
 }
 
 
 async function storeTokens(tokens) {
-    try {
-        if (tokens.accessToken) {
-            await AsyncStorage.setItem('accessToken', tokens.accessToken);
-        }
-        if (tokens.refreshToken) {
-            await AsyncStorage.setItem('refreshToken', tokens.refreshToken);
-        }
-        console.log('Tokens stored successfully');
-        console.log('accessToken:', tokens.accessToken);
-    } catch (error) {
-        console.error('Error storing tokens:', error);
+  try {
+    if (tokens.accessToken) {
+      await AsyncStorage.setItem('accessToken', tokens.accessToken);
     }
+    if (tokens.refreshToken) {
+      await AsyncStorage.setItem('refreshToken', tokens.refreshToken);
+    }
+    console.log('Tokens stored successfully');
+    console.log('accessToken:', tokens.accessToken);
+  } catch (error) {
+    console.error('Error storing tokens:', error);
+  }
 }
 
 
@@ -46,25 +46,25 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   async function handleLogin() {
-        try {
-            const response = await axios.post(loginUrl, {
-                username,
-                password
-            });
+    try {
+      const response = await axios.post(loginUrl, {
+        username,
+        password
+      });
 
-            if (response.status === 200) {
-                const tokens = response.data;
-                storeTokens(tokens);
-                navigation.navigate('HomeScreen');
-            } else {
-                const errorData = response.data;
-                showAlertModal('Login Error', errorData.message);
-            }
-        } catch (error) {
-            showAlertModal('Login Error', 'An error occurred while logging in');
-            console.error('Error during login:', error);
-        }
+      if (response.status === 200) {
+        const tokens = response.data;
+        storeTokens(tokens);
+        navigation.navigate('HomeScreen');
+      } else {
+        const errorData = response.data;
+        showAlertModal('Login Error', errorData.message);
+      }
+    } catch (error) {
+      showAlertModal('Login Error', 'An error occurred while logging in');
+      console.error('Error during login:', error);
     }
+  }
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
   const handleSnackbarDismiss = () => {
@@ -107,7 +107,7 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.input}
               />
               <Button mode="contained" onPress={handleLogin}>
-                Log in
+                Đăng nhập
               </Button>
             </View>
           </View>
