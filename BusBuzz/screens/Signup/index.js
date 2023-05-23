@@ -14,15 +14,9 @@ const SignUpScreen = ({ navigation }) => {
     // Implement sign-up logic here
   };
 
-<<<<<<< Updated upstream
-    const navigateToLogin = () => {
-        navigation.navigate('LoginScreen'); // Replace 'Login' with the name of your login screen component
-    };
-=======
   const navigateToLogin = () => {
     navigation.navigate("LoginScreen"); // Replace 'Login' with the name of your login screen component
   };
->>>>>>> Stashed changes
 
   return (
     <View style={styles.container}>
