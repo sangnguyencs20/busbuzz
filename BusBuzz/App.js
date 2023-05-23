@@ -73,6 +73,7 @@ function App() {
                 animationEnabled: true,
                 disableGestures: true,
               }}
+              
               initialRouteName={isFirstLaunch ? 'OnboardingScreen' : isLoggedIn ? 'HomeScreen' : 'LoginScreen'}
             >
               {isFirstLaunch && (

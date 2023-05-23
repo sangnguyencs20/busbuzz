@@ -23,8 +23,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/routes/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MDQ2MzEwLCJleHAiOjE2ODQxMzI3MTB9.ccX2Fu8TyIo0XEahKZiFbO3aIsgAek4n1QNB78ABCqA
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI1MzNlODZmYzRjNmRiZjFjZGM1NiIsInVzZXJuYW1lIjoic2FuZ252IiwiaWF0IjoxNjg0ODUyMjkwLCJleHAiOjE2ODQ5Mzg2OTB9.yu4ljIj11smqA8bvdj32s0drtg5al9R7tN0l2MZWNAU
 
 POST http://localhost:3000/token/
 Content-Type: application/json
