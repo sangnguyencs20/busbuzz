@@ -66,7 +66,7 @@ function App() {
                 headerShown: false,
                 animationEnabled: true,
               }}
-              initialRouteName={isFirstLaunch ? "OnboardingScreen" : "Payment"}
+              initialRouteName={isFirstLaunch ? "OnboardingScreen" : "SearchResultScreen"}
             >
               {isFirstLaunch && (
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
