@@ -40,19 +40,25 @@ const clearAsyncStorage = async () => {
 };
 
 function App() {
-  // clearAsyncStorage();
+  clearAsyncStorage();
   const Stack = createNativeStackNavigator();
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunched').then((value) => {
-      if (value === null) {
-        AsyncStorage.setItem('alreadyLaunched', 'true');
-        setIsFirstLaunch(true);
-      } else {
-        setIsFirstLaunch(false);
+    AsyncStorage.getItem('accessToken').then((token) => {
+      if (token) {
+        setIsLoggedIn(true); // Set login status to true if access token exists
       }
+      AsyncStorage.getItem('alreadyLaunched').then((value) => {
+        if (value === null) {
+          AsyncStorage.setItem('alreadyLaunched', 'true');
+          setIsFirstLaunch(true);
+        } else {
+          setIsFirstLaunch(false);
+        }
+      });
     });
   }, []);
 
@@ -65,8 +71,10 @@ function App() {
               screenOptions={{
                 headerShown: false,
                 animationEnabled: true,
+                disableGestures: true,
               }}
-              initialRouteName={isFirstLaunch ? "OnboardingScreen" : "SearchResultScreen"}
+              
+              initialRouteName={isFirstLaunch ? 'OnboardingScreen' : isLoggedIn ? 'HomeScreen' : 'LoginScreen'}
             >
               {isFirstLaunch && (
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -78,7 +86,7 @@ function App() {
               <Stack.Screen name="HomeScreen" component={HomeScreen} />
               <Stack.Screen name="SearchScreen" component={SearchScreen} />
               <Stack.Screen name="SearchResultScreen" component={SeachResultScreen} />
-              
+
               <Stack.Screen name="Payment" component={Payment} />
               <Stack.Screen name="PaymentChoice" component={PaymentChoice} />
               <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />

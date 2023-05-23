@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { setDeparture, setSearchType, swapLocations } from '../../reducers/searchReducer';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text, Searchbar, Surface, IconButton } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, BackHandler } from "react-native";
+import Lottie from 'lottie-react-native';
 import * as Location from 'expo-location';
 
 import data from './data';
 
 const HomeScreen = ({ navigation }) => {
+    const handleBackButtonPress = () => {
+        // Return true to indicate that the back button press is handled and should not close the app
+        return true;
+    };
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButtonPress);
+
+        // Clean up the event listener when the component unmounts
+        return () => backHandler.remove();
+    }, []);
+
     const dispatch = useDispatch();
 
     const departure = useSelector((state) => state.search.departure.name.toString());
@@ -71,47 +83,69 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Surface
-                mode="contained"
-                style={styles.form}
-            >
-                <View style={styles.label}>
-                    <Text variant="titleSmall">Xuất phát từ</Text>
-                    <IconButton
-                        icon="crosshairs-gps"
-                        size={24}
-                        onPress={handleCurrentLocationPress}
-                    />
-                </View>
-                <Searchbar
-                    placeholder="Vị trí hiện tại"
-                    value={truncateInput(departure, 25)}
-                    onIconPress={() => handleSearchbarPress('departure')}
-                    onChangeText={(text) => { }}
-                    style={styles.searchbar}
+            <View style={{ width: '100%', position: 'relative', height: 60, zIndex: 10 }}>
+                <IconButton
+                    mode="contained-tonal"
+                    icon="account"
+                    size={30}
+                    style={{ position: 'absolute', right: 5, }}
+                    onPress={() => navigation.navigate('SearchScreen')}
                 />
-                <View style={styles.label}>
-                    <Text variant="titleSmall">Đến</Text>
-                    <IconButton
-                        icon="swap-vertical"
-                        size={24}
-                        onPress={() => handleSwapLocationsPress()}
-                    />
-                </View>
-                <Searchbar
-                    placeholder="Nơi đến"
-                    onIconPress={() => handleSearchbarPress('destination')}
-                    value={truncateInput(destination, 25)}
-                    onChangeText={(text) => { }}
-                    style={styles.searchbar}
+            </View>
+            {/* <View style={styles.lottieContainer}>
+                <Lottie
+                    source={require('../../assets/home/bus.json')}
+                    autoPlay
+                    style={styles.lottie}
                 />
+            </View> */}
+            <View style={styles.form}>
+                <Text variant="displayMedium" style={{ marginVertical: 15 }}>Hôm nay bạn muốn đi đâu?</Text>
+                <Surface
+                    mode="contained"
+                    style={{
+                        borderRadius: 25,
+                        padding: 20,
+                    }}
+                >
+                    <View style={styles.label}>
+                        <Text variant="titleSmall">Xuất phát từ</Text>
+                        <IconButton
+                            icon="crosshairs-gps"
+                            size={24}
+                            onPress={handleCurrentLocationPress}
+                        />
+                    </View>
+                    <Searchbar
+                        placeholder="Vị trí hiện tại"
+                        value={truncateInput(departure, 25)}
+                        onIconPress={() => handleSearchbarPress('departure')}
+                        onChangeText={(text) => { }}
+                        style={styles.searchbar}
+                    />
+                    <View style={styles.label}>
+                        <Text variant="titleSmall">Đến</Text>
+                        <IconButton
+                            icon="swap-vertical"
+                            size={24}
+                            onPress={() => handleSwapLocationsPress()}
+                        />
+                    </View>
+                    <Searchbar
+                        placeholder="Nơi đến"
+                        onIconPress={() => handleSearchbarPress('destination')}
+                        value={truncateInput(destination, 25)}
+                        onChangeText={(text) => { }}
+                        style={styles.searchbar}
+                    />
+                </Surface>
                 <Button
                     mode="contained"
                     style={styles.searchbutton}
                     onPress={() => navigation.navigate('SearchResultScreen')}>
                     Tìm kiếm
                 </Button>
-            </Surface>
+            </View>
         </SafeAreaView>
     )
 };
@@ -122,10 +156,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    lottieContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'right',
+    },
+    lottie: {
+        width: '100%',
+        top: 20,
+        zIndex: 1,
+    },
     form: {
         width: '90%',
-        borderRadius: 25,
-        padding: 20,
     },
     label: {
         flexDirection: 'row',
