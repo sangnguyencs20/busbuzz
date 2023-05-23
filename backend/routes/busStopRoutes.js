@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
-        description: req.body.description
+        address: req.body.address
     });
     try {
         const newBusStop = await busStop.save();
@@ -43,7 +43,7 @@ router.patch('/:id', async (req, res) => {
         busStop.name = req.body.name;
         busStop.latitude = req.body.latitude;
         busStop.longitude = req.body.longitude;
-        busStop.description = req.body.description;
+        busStop.address = req.body.address;
         const updatedBusStop = await busStop.save();
         res.json(updatedBusStop);
     } catch (err) {
