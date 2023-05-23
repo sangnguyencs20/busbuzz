@@ -40,7 +40,7 @@ const clearAsyncStorage = async () => {
 };
 
 function App() {
-  clearAsyncStorage();
+  // clearAsyncStorage();
   const Stack = createNativeStackNavigator();
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -66,7 +66,7 @@ function App() {
                 headerShown: false,
                 animationEnabled: true,
               }}
-              initialRouteName={isFirstLaunch ? "OnboardingScreen" : "LoginScreen"}
+              initialRouteName={isFirstLaunch ? "OnboardingScreen" : "Payment"}
             >
               {isFirstLaunch && (
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
