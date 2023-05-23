@@ -108,7 +108,7 @@ const HomeScreen = ({ navigation }) => {
                 <Button
                     mode="contained"
                     style={styles.searchbutton}
-                    onPress={() => navigation.navigate('TicketBooking')}>
+                    onPress={() => navigation.navigate('SearchResultScreen')}>
                     Tìm kiếm
                 </Button>
             </Surface>
