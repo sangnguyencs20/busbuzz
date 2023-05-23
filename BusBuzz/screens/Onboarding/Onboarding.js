@@ -24,6 +24,7 @@ const OnboardingScreen = ({ navigation }) => {
             onDone={() => navigation.navigate("LoginScreen")}
             controlStatusBar={false}
             bottomBarColor={theme.colors.background}
+            bottomBarHighlight={false}
             NextButtonComponent={Next}
             SkipButtonComponent={Skip}
             DoneButtonComponent={Done}
