@@ -65,8 +65,6 @@ const LoginScreen = ({ navigation }) => {
             console.error('Error during login:', error);
         }
     }
-
-
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
   const handleSnackbarDismiss = () => {
@@ -117,7 +115,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.createAccountText}>Bạn chưa có tài khoản?</Text>
             <TouchableRipple
               onPress={() => {
-                navigation.navigate("SignupScreen");
+                navigation.navigate("SignUpScreen");
               }}
             >
               <Text style={styles.createAccountLink}>Tạo mới tại đây</Text>
