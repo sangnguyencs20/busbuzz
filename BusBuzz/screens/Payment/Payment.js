@@ -21,53 +21,60 @@ const Payment = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <IconButton style={styles.goBack} icon='arrow-left' size={30} />
+      <IconButton
+        style={styles.goBack}
+        icon='arrow-left'
+        size={30} />
+
       <View style={styles.topCircle}>
         <Avatar.Icon icon="ticket" size={80} />
       </View>
-      <Card mode="outlined" style={styles.cardContainer}>
-        <View style={styles.upperSection}>
-          <Text style={styles.upperText1}>Quý khách</Text>
-          <Text style={styles.upperText2}>ABC</Text>
-          {/* passenger */}
-        </View>
-        <View style={styles.line} />
-        <View style={styles.lowerSection}>
-          <View style={styles.date}>
-            <Avatar.Icon
-              icon="calendar"
-              size={40}
-              color="white"
-              style={{ alignSelf: "center" }}
-            />
-            <View style={styles.dateText}>
-              <Text style={styles.dateLabel}>Ngày</Text>
-              <Text style={styles.dateValue}>20/5/2022</Text>
-            </View>
-            <View style={styles.timeText}>
-              <Text style={styles.timeLabel}>Giờ xuất phát</Text>
-              <Text style={styles.timeValue}>08:30</Text>
-            </View>
+      <Card mode="contained" style={styles.cardContainer}>
+        <Card.Content>
+          <View style={styles.upperSection}>
+            <Text variant="headlineSmall">Hành khách</Text>
+            <Text variant="headlineSmall" style={{ fontWeight: 700 }}>ABC</Text>
+            {/* passenger */}
           </View>
-          <Card mode='contained' style={styles.busCard}>
-            <Avatar.Icon icon="bus" size={40} style={{ alignSelf: "center" }} />
-            <View style={styles.busInfo}>
-              <Text style={styles.busNumber}>Tuyến 99</Text>
-              <Text style={styles.busLine}>
-                Đại học Bách Khoa CS2 - Đại học Bách Khoa CS1
-              </Text>
-              <Button mode='contained' style={styles.price}>15.000 đ</Button>
+
+          <View style={styles.line} />
+          <View style={styles.lowerSection}>
+            <View style={styles.date}>
+              <Avatar.Icon
+                icon="calendar"
+                size={50}
+                color="white"
+                style={{ alignSelf: "center" }}
+              />
+              <View style={styles.dateTime}>
+                <Text variant="titleMedium">Ngày</Text>
+                <Text variant="titleMedium">20/5/2022</Text>
+              </View>
+              <View style={styles.dateTime}>
+                <Text variant="titleMedium">Giờ xuất phát</Text>
+                <Text variant="titleMedium">08:30</Text>
+              </View>
             </View>
-          </Card>
-        </View>
+            <Card mode="contained" >
+              <Avatar.Icon icon="bus" size={50} style={{ alignSelf: "center", marginTop: 15, marginBottom: 5 }} />
+              <View style={styles.busInfo}>
+                <Text variant="titleLarge" style={{ fontWeight: 700 }}>99</Text>
+                <Text variant="bodyMedium" style={{ textAlign: "center", margin: 5 }}>
+                  Đại học Bách Khoa CS2 - Đại học Bách Khoa CS1
+                </Text>
+                <Button mode='contained' style={{ marginVertical: 15 }}>7.000đ</Button>
+              </View>
+            </Card>
+          </View>
+        </Card.Content>
       </Card>
       <View style={styles.buttons}>
-      <Button mode='contained' style={styles.paymentMethod} icon='wallet'>
-        Chọn phương thức thanh toán
-      </Button>
-      <Button mode='contained' style={styles.payment}>
-        Thanh toán
-      </Button>
+        <Button mode='contained' style={styles.paymentMethod} icon='wallet' onPress={() => navigation.navigate('HomeScreen')}>
+          Chọn phương thức thanh toán
+        </Button>
+        <Button mode='contained' style={styles.payment} onPress={() => navigation.navigate('HomeScreen')}>
+          Thanh toán
+        </Button>
       </View>
     </SafeAreaView>
   );
@@ -76,41 +83,30 @@ const Payment = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   goBack: {
     position: "absolute",
-    top: 20,
-    left: 5,
-    zIndex: 1,
+    top: 30,
+    left: 10,
   },
-
   topCircle: {
     position: "absolute",
-    top: 30,
+    top: 80,
     zIndex: 1,
   },
   cardContainer: {
-    width: "90%",
-    height: 600,
-    marginVertical: 10,
+    width: "85%",
+    borderRadius: 25,
+    marginVertical: 25,
     position: "absolute",
-    top: 60,
-    // paddingTop: 60,
-    
+    top: 95,
+    paddingTop: 50,
   },
   upperSection: {
     alignItems: "center",
     paddingTop: 60,
-  },
-  upperText1: {
-    fontSize: 20,
-  },
-  upperText2: {
-    paddingVertical: 10,
-    fontSize: 30,
-    fontWeight: "bold",
   },
   line: {
     // width: "100%",
@@ -122,83 +118,29 @@ const styles = StyleSheet.create({
     height: 1,
     borderStyle: "dashed",
     marginVertical: 20,
-    width: "80%",
+    width: "85%",
     alignSelf: "center",
   },
   lowerSection: {
     paddingHorizontal: 40,
   },
-  date: {
-    // alignItems: "center",
-  },
-  dateText: {
+  dateTime: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  dateLabel: {
-    textAlign: "left",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  dateValue: {
-    textAlign: "right",
-    textAlignVertical: "center",
-  },
-  timeText: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 10,
-  },
-  timeLabel: {
-    textAlign: "left",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  timeValue: {
-    textAlign: "right",
-    textAlignVertical: "center",
-  },
-  busCard: {
-    width: "100%",
-    padding: 10,
-    marginVertical: 20,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
+    marginVertical: 5,
   },
   busInfo: {
     alignItems: "center",
-  },
-  busNumber: {
-    paddingVertical: 7,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  busLine: {
-    paddingVertical: 7,
-    fontSize: 15,
-    textAlign: "center",
-    width: '80%',
-  },
-  price: {
-    paddingVertical: 5,
-    marginVertical: 10,
-    fontSize: 20,
-    fontWeight: "bold",
-    // textColor: "red",
-    width: '80%',
   },
   buttons: {
     position: 'absolute',
     bottom: 10,
   },
   paymentMethod: {
-    // width: '100%',
     paddingHorizontal: 40,
     marginVertical: 10,
   },
   payment: {
-    // width: '90%',
     marginVertical: 10,
     marginHorizontal: 0,
   },
