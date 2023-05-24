@@ -1,9 +1,55 @@
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management APIs
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: The username of the user
+ *         password:
+ *           type: string
+ *           description: The password of the user
+ *         fullname:
+ *           type: string
+ *           description: The full name of the user
+ *       required:
+ *         - username
+ *         - password
+ *         - fullname
+ */
+
 const express = require('express');
 
 const UserModel = require('../models/userModel');
 
 const router = express.Router();
 
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
 router.get('/', async (req, res) => {
     try {
         const users = await UserModel.find();
@@ -15,6 +61,28 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Get a user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the user to retrieve
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
 router.get('/:id', async (req, res) => {
     try{
         const user = await UserModel.findById(req.params.id);
@@ -28,6 +96,27 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
 router.post('/', async (req, res) => {
     const user = new UserModel({
         username: req.body.username,
@@ -42,6 +131,34 @@ router.post('/', async (req, res) => {
     }
 });
 
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   patch:
+ *     summary: Update a user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the user to update
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       202:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
 router.patch('/:id', async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id);
@@ -55,6 +172,28 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete a user by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the user to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       202:
+ *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ */
 router.delete('/:id', async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id);
@@ -65,6 +204,30 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+
+/**
+ * @swagger
+ * /users/{id}/ticket:
+ *   get:
+ *     summary: Get user's ticket by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the user
+ *         schema:
+ *           type: string
+ *     responses:
+ *       202:
+ *         description: User's ticket retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ */
 router.get('/:id/ticket', async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id);

@@ -7,6 +7,43 @@ const verifyToken = require('./middleware/auth');
 const User = require('./models/userModel');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const swaggerDoc = require('swagger-jsdoc')
+const swaggerUI = require('swagger-ui-express')
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'BusBuzz API',
+            version: '1.0.0',
+        },
+        servers: [
+            { url: 'http://localhost:3000' }
+            // Uncomment the line below for the production server
+            // { url: 'https://busbuzz-server.onrender.com/' }
+        ],
+        components: {
+            securitySchemes: {
+                BearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
+        },
+        security: [
+            {
+                BearerAuth: [],
+            },
+        ],
+    },
+    apis: ['./api/*.js'],
+};
+
+const specs = swaggerDoc(options)
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
+
+
+
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
