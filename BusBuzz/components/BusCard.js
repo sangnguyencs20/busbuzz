@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Card, Title, Paragraph, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const BusCard = ({busID, depart, arrive, time, price}) => {
+const BusCard = ({busNum, depart, arrive, time, price}) => {
   return (
     <Card mode="contained" style={styles.card}>
       <View style={styles.row}>
@@ -15,7 +15,7 @@ const BusCard = ({busID, depart, arrive, time, price}) => {
         <View style={styles.divider} />
         <View style={[styles.column, styles.rightColumn]}>
           <Card.Content>
-            <Title style={styles.title}>Tuyến số {busID}</Title>
+            <Title style={styles.title}>Tuyến số {busNum}</Title>
             <Paragraph style={styles.paragraph}>
               {depart} - {arrive}
             </Paragraph>
