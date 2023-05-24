@@ -4,14 +4,14 @@ const searchSlice = createSlice({
   name: 'search',
   initialState: {
     departure: {
-      id: 0,
+      _id: 0,
       name: '',
       address: '',
       latitude: 0,
       longitude: 0,
     },
     destination: {
-      id: 0,
+      _id: 0,
       name: '',
       address: '',
       latitude: 0,
