@@ -3,6 +3,7 @@ import axios from "axios";
 import { View, StyleSheet, TouchableOpacity, Image, Alert } from "react-native";
 import { TextInput, Button, Text, TouchableRipple } from "react-native-paper";
 import { API_URL } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function showAlertModal(title, message) {
   Alert.alert(title, message);
@@ -25,6 +26,10 @@ const SignUpScreen = ({ navigation }) => {
 
       if (response.status === 201) {
         showAlertModal("Sign Up Success", "Your account has been created successfully");
+
+        //Trong trường hợp đăng nhập lần đầu xong đặt vé luôn thì lưu dự phòng fullName
+        AsyncStorage.setItem('fullName', fullName)
+
         navigation.navigate("LoginScreen");
       } else {
         const errorData = response.data;
