@@ -8,7 +8,10 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const routes = await RouteModel.find().populate('places').populate('bus').exec();
-        res.json(routes);
+        if (routes.length === 0) {
+            res.status(204).json({ message: 'No routes found' });
+        }
+        res.status(200).json(routes);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -18,7 +21,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const route = await RouteModel.findById(req.params.id).populate('places').populate('bus').exec();
-        res.json(route);
+        if (route === null) {
+            res.status(204).json({ message: 'No route found' });
+        }
+        res.status(200).json(route);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -31,8 +37,10 @@ router.post('/search', async (req, res) => {
             .populate('places')
             .populate('bus')
             .exec();
-
-        res.json(routes);
+        if (routes.length === 0) {
+            res.status(204).json({ message: 'No routes found' });
+        }
+        res.status(200).json(routes);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -62,7 +70,7 @@ router.patch('/:id', async (req, res) => {
         route.timeline = req.body.timeline;
         route.places = req.body.places;
         const updatedRoute = await route.save();
-        res.json(updatedRoute);
+        res.status(202).json(updatedRoute);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -72,16 +80,10 @@ router.delete('/:id', async (req, res) => {
     try {
         const route = await RouteModel.findById(req.params.id);
         const deletedRoute = await route.remove();
-        res.json(deletedRoute);
+        res.status(202).json(deletedRoute);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 })
-
-
-
-
-
-
 
 module.exports = router;

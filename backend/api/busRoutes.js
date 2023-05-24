@@ -6,7 +6,12 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const buses = await BusModel.find();
-        res.json(buses);
+        if(buses.length === 0) 
+        {
+            res.status(204).json({ message: 'No buses found' })
+        }
+        else 
+            res.status(200).json(buses)
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -15,7 +20,12 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const bus = await BusModel.findById(req.params.id);
-        res.json(bus);
+        if(bus === null){
+            res.status(204).json({ message: 'No bus found' })
+        }
+        else {
+            res.status(200).json(bus);
+        }
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -25,6 +35,7 @@ router.post('/', async (req, res) => {
     const bus = new BusModel({
         licensePlate: req.body.licensePlate,
         timeToStart: req.body.timeToStart,
+        number: req.body.number,
     });
     try {
         const newBus = await bus.save();
@@ -39,6 +50,7 @@ router.patch('/:id', async (req, res) => {
         const bus = await BusModel.findById(req.params.id);
         bus.licensePlate = req.body.licensePlate;
         bus.timeToStart = req.body.timeToStart;
+        bus.number = req.body.number;
         const updatedBus = await bus.save();
         res.json(updatedBus);
     } catch (err) {

@@ -8,6 +8,16 @@ Content-Type: application/json
 
 
 ###
+POST http://localhost:3000/routes/search
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0OTM0NDQxLCJleHAiOjE2ODUwMjA4NDF9.gCGoyWJXR65aL8uhtSuMsu1xEjiHDAK3rT_u9YzktS8
+
+{
+  "start": "64699f8fa39bcf193c8be630",
+  "end": "64699f8fa39bcf193c8be632"
+}
+
+###
 
 
 POST http://localhost:3000/signup
@@ -23,7 +33,17 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/routes/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI1MzNlODZmYzRjNmRiZjFjZGM1NiIsInVzZXJuYW1lIjoic2FuZ252IiwiaWF0IjoxNjg0ODUyMjkwLCJleHAiOjE2ODQ5Mzg2OTB9.yu4ljIj11smqA8bvdj32s0drtg5al9R7tN0l2MZWNAU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0OTA3MDM2LCJleHAiOjE2ODQ5OTM0MzZ9.IFVk7zHtXZDcQVdlOFoxxwjCP2L1GGyRF8dnqmI29Fc
+
+###
+GET http://localhost:3000/routes/6461a31986ad133c1067312a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0OTA3MDM2LCJleHAiOjE2ODQ5OTM0MzZ9.IFVk7zHtXZDcQVdlOFoxxwjCP2L1GGyRF8dnqmI29Fc
+
+###
+GET http://localhost:3000/busStops/64699f8fa39bcf19ca8be636
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0OTM1MDQ5LCJleHAiOjE2ODUwMjE0NDl9.bHiRO4maypzkZVPQnkjd9XOLew8IkBvHfbS9te_7_GQ
+
+
 
 POST http://localhost:3000/token/
 Content-Type: application/json
@@ -39,12 +59,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkM
 
 ###
 POST http://localhost:3000/routes/search
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0MTE5MDc5LCJleHAiOjE2ODQyMDU0Nzl9.wtt9OO94QECz7-XcHI40_OY5X1O50JvBEZMHPeL5_eM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg0OTA3MDM2LCJleHAiOjE2ODQ5OTM0MzZ9.IFVk7zHtXZDcQVdlOFoxxwjCP2L1GGyRF8dnqmI29Fc
 Content-Type: application/json
 
 {
-  "start": "64607f81128f9cff725040fd",
-  "end": "64608317128f9cff725040fe"
+  "start": "64699f8fa39bcf193c8be630",
+  "end": "64699f8fa39bcf193c8be636"
 }
 
 

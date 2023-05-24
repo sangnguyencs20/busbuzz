@@ -7,7 +7,10 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const users = await UserModel.find();
-        res.json(users);
+        if (users.length === 0) {
+            res.status(204).json({ message: 'No users found' });
+        }
+        res.status(200).json(users);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -15,7 +18,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try{
         const user = await UserModel.findById(req.params.id);
-        res.json(user);
+        if(user === null){
+            res.status(204).json({ message: 'No user found' });
+        }
+        res.status(200).json(user);
     }
     catch(err){
         res.status(500).json({ message: err.message });
@@ -43,7 +49,7 @@ router.patch('/:id', async (req, res) => {
         user.password = req.body.password;
         user.fullname = req.body.fullname;
         const updatedUser = await user.save();
-        res.json(updatedUser);
+        res.status(202).json(updatedUser);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -53,7 +59,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id);
         const deletedUser = await user.remove();
-        res.json(deletedUser);
+        res.status(202).json(deletedUser);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -62,7 +68,10 @@ router.delete('/:id', async (req, res) => {
 router.get('/:id/ticket', async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id);
-        res.json(user.ticket);
+        if(user === null){
+            res.status(204).json({ message: 'No user found' });
+        }
+        res.status(202).json(user.ticket);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

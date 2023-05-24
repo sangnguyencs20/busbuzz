@@ -6,16 +6,22 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const tickets = await TicketModel.find();
-        res.json(tickets);
+        if (tickets.length === 0) {
+            res.status(204).json({ message: 'No tickets found' });
+        }
+        res.status(200).json(tickets);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-}); // Added closing parenthesis here
+});
 
 router.get('/:id', async (req, res) => {
     try {
         const ticket = await TicketModel.findById(req.params.id);
-        res.json(ticket);
+        if (ticket === null) {
+            res.status(204).json({ message: 'No ticket found' });
+        }
+        res.status(200).json(ticket);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -48,7 +54,7 @@ router.patch('/:id', async (req, res) => {
         ticket.endStop = req.body.endStop;
         ticket.price = req.body.price;
         const updatedTicket = await ticket.save();
-        res.json(updatedTicket);
+        res.status(202).json(updatedTicket);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -58,7 +64,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const ticket = await TicketModel.findById(req.params.id);
         const deletedTicket = await ticket.remove();
-        res.json(deletedTicket);
+        res.status(200).json(deletedTicket);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

@@ -7,7 +7,10 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const busStops = await BusStopModel.find();
-        res.json(busStops);
+        if (busStops.length === 0) {
+            res.status(204).json({ message: 'No bus stops found' })
+        }
+        res.status(200).json(busStops);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -16,7 +19,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const busStop = await BusStopModel.findById(req.params.id);
-        res.json(busStop);
+        if (busStop === null) {
+            res.status(204).json({ message: 'No bus stop found' })
+        }
+        res.status(200).json(busStop);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -45,7 +51,7 @@ router.patch('/:id', async (req, res) => {
         busStop.longitude = req.body.longitude;
         busStop.address = req.body.address;
         const updatedBusStop = await busStop.save();
-        res.json(updatedBusStop);
+        res.status(202).json(updatedBusStop);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -55,7 +61,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const busStop = await BusStopModel.findById(req.params.id);
         const deletedBusStop = await busStop.remove();
-        res.json(deletedBusStop);
+        res.status(202).json(deletedBusStop);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -65,7 +71,10 @@ router.get('/search/:name', async (req, res) => {
     try {
         const searchTerm = decodeURIComponent(req.params.name);
         const busStop = await BusStopModel.find({ name: { $regex: searchTerm, $options: 'i' } });
-        res.json(busStop);
+        if (busStop === null) {
+            res.status(204).json({ message: 'No bus stop found' })
+        }
+        res.status(200).json(busStop);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

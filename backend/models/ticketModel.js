@@ -10,7 +10,7 @@ const TicketSchema = new mongoose.Schema({
     },
     time: {
         type: String,
-        required: [true, 'Please enter a qrcode'],
+        required: [true, 'Please enter a time'],
     },
     startStop: {
         type: mongoose.Schema.Types.ObjectId,
