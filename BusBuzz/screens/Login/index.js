@@ -46,6 +46,11 @@ const LoginScreen = ({ navigation }) => {
       if (response.status === 200) {
         const tokens = response.data;
         storeTokens(tokens);
+        
+        //Lưu thông tin user fullName
+        const fullName = response.data.user.fullName;
+        AsyncStorage.setItem('fullName', fullName)
+
         navigation.navigate("HomeScreen");
       } else {
         const errorData = response.data;

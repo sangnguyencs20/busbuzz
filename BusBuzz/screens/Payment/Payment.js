@@ -15,7 +15,7 @@ const Payment = ({ navigation }) => {
   const [time, setTime] = useState('');
   const [price, setPrice] = useState('');
   const [date, setDate] = useState('');
-  const [user, setUser] = useState('');
+  const [fullName, setFullName] = useState('');
 
   useEffect(() => {
     //Lấy thông tin truyền từ SearchResult
@@ -38,13 +38,12 @@ const Payment = ({ navigation }) => {
     //Lấy thông tin user, cụ thể là trường fullName
     const fetchUser = async () => {
       try {
-      //T đang k biết làm sao để lấy được id của user đang đăng nhập
-      const userId = "645b4f0d37926b086cd5b1b5"; // T đang set cứng cho acc của svn á
-      const response = await axios.get(`${API_URL}/users/:${userId}`);
-      const user = await response.json();
-      setUser(user);
+        const fullName = await AsyncStorage.getItem('fullName');
+        if (fullName !== null) {
+          setFullName(fullName);
+        }
       } catch (error) {
-        console.log('Error retrieving user full name: ', error);
+        console.log('Error retrieving fullName: ', error);
       }
     };
 
@@ -66,11 +65,13 @@ const Payment = ({ navigation }) => {
         <Card.Content>
           <View style={styles.upperSection}>
             <Text variant="headlineSmall">Hành khách</Text>
-            {user && (
+            {fullName ? (
             <Text variant="headlineSmall" style={{ fontWeight: 700 }}>
-              {user.fullName}
+              {fullName}
             </Text>
-            )}
+            ) : (<Text variant="headlineSmall" style={{ fontWeight: 700 }}>
+            Lỗi lấy tên hành khách
+          </Text>)}
             {/* passenger */}
           </View>
 
