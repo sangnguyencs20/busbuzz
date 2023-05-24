@@ -130,7 +130,7 @@ const Payment = ({ navigation }) => {
           style={styles.payment}
           onPress={() => {
             // saveTicketData(busNum, depart, arrive, time, price, date);
-            addTicket(busNum, date, time, depart, arrive);
+            addTicket(busNum, date, time, depart, arrive, price);
             navigation.navigate("PaymentSuccess")
           }}
         >
@@ -141,13 +141,14 @@ const Payment = ({ navigation }) => {
   );
 };
 
-const addTicket = async (busNum, date, time, startStop, endStop) => {
+const addTicket = async (busNum, date, time, startStop, endStop, price) => {
   const ticket = {
     routeId: busNum, //???? :)))))
     day: date, 
     time: time, 
     startStop: startStop, 
     endStop: endStop, 
+    price: price,
   };
 
   try {
