@@ -1,4 +1,5 @@
 import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, StyleSheet } from "react-native";
 import { Card, Button, Text, IconButton, Avatar } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -69,10 +70,10 @@ const Payment = ({
         </Card.Content>
       </Card>
       <View style={styles.buttons}>
-        <Button mode='contained' style={styles.paymentMethod} icon='wallet' onPress={() => navigation.navigate('HomeScreen')}>
+        <Button mode='contained' style={styles.paymentMethod} icon='wallet' onPress={() => navigation.navigate('PaymentChoice')}>
           Chọn phương thức thanh toán
         </Button>
-        <Button mode='contained' style={styles.payment} onPress={() => navigation.navigate('HomeScreen')}>
+        <Button mode='contained' style={styles.payment} onPress={() => navigation.navigate('PaymentSuccess')}>
           Thanh toán
         </Button>
       </View>

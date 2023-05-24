@@ -11,7 +11,7 @@ const paymentCard = (paymentName, partner, img) => {
           <Text variant="titleMedium">{paymentName}</Text>
         </View>
         <View style={styles.cardRight}>
-          <Image source={img} style={{ height: 80, width: 80 }} />
+          <Image source={img} style={{ height: 80, width: 80 }} resizeMode="contain"/>
         </View>
       </View>
     </Card>
@@ -34,6 +34,11 @@ const PaymentChoice = ({ navigation }) => {
       paymentName: "9Pay",
       partner: false,
       img: require("../../assets/payment/9pay.png"),
+    },
+    {
+      paymentName: "MasterCard",
+      partner: false,
+      img: require("../../assets/payment/mastercard.png"),
     },
   ];
 
@@ -71,14 +76,14 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: 350,
     paddingVertical: "3%",
-    // paddingVertical: "5%",
     flexDirection: "row",
+    borderRadius: 15,
+    borderWidth: 2,
   },
   cardLeft: {
     flex: 0.7,
     alignItems: "flex-start",
     justifyContent: "center",
-    // alignSelf: "center",
     paddingLeft: "15%",
   },
   cardRight: {
