@@ -29,6 +29,7 @@ router.post('/search', async (req, res) => {
         const { start, end } = req.body;
         const routes = await RouteModel.find({ places: { $all: [start, end] } })
             .populate('places')
+            .populate('bus')
             .exec();
 
         res.json(routes);
