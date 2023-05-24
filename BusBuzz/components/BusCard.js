@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const BusCard = ({busID, depart, arrive, time, price}) => {
   return (
-    <Card mode="outlined" style={styles.card}>
+    <Card mode="contained" style={styles.card}>
       <View style={styles.row}>
         <View style={[styles.column, styles.leftColumn]}>
           <View style={styles.icon}>
@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
   card: {
     margin: 16,
     borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
   row: {
     flexDirection: "row",

@@ -1,19 +1,12 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { API_URL } from '@env';
+import { API_URL } from "@env";
 
 const loginUrl = `${API_URL}/login`;
 
-import {
-  View,
-  StyleSheet,
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  Alert
-} from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from "react-native";
 import {
   TextInput,
   Button,
@@ -25,22 +18,20 @@ function showAlertModal(title, message) {
   Alert.alert(title, message);
 }
 
-
 async function storeTokens(tokens) {
   try {
     if (tokens.accessToken) {
-      await AsyncStorage.setItem('accessToken', tokens.accessToken);
+      await AsyncStorage.setItem("accessToken", tokens.accessToken);
     }
     if (tokens.refreshToken) {
-      await AsyncStorage.setItem('refreshToken', tokens.refreshToken);
+      await AsyncStorage.setItem("refreshToken", tokens.refreshToken);
     }
-    console.log('Tokens stored successfully');
-    console.log('accessToken:', tokens.accessToken);
+    console.log("Tokens stored successfully");
+    console.log("accessToken:", tokens.accessToken);
   } catch (error) {
-    console.error('Error storing tokens:', error);
+    console.error("Error storing tokens:", error);
   }
 }
-
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = React.useState("");
@@ -49,20 +40,20 @@ const LoginScreen = ({ navigation }) => {
     try {
       const response = await axios.post(loginUrl, {
         username,
-        password
+        password,
       });
 
       if (response.status === 200) {
         const tokens = response.data;
         storeTokens(tokens);
-        navigation.navigate('HomeScreen');
+        navigation.navigate("HomeScreen");
       } else {
         const errorData = response.data;
-        showAlertModal('Login Error', errorData.message);
+        showAlertModal("Login Error", errorData.message);
       }
     } catch (error) {
-      showAlertModal('Login Error', 'An error occurred while logging in');
-      console.error('Error during login:', error);
+      showAlertModal("Login Error", "An error occurred while logging in");
+      console.error("Error during login:", error);
     }
   }
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -71,75 +62,68 @@ const LoginScreen = ({ navigation }) => {
     setSnackbarVisible(false);
   };
 
-
   return (
-    <KeyboardAvoidingView behavior="height" style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.container}>
-          <View style={styles.smaller}>
-            <Image
-              source={require("../../assets/login/login.png")}
-              style={styles.img}
-            />
-            <Text variant="displaySmall" style={styles.title}>
-              Đăng nhập
-            </Text>
+    <View style={styles.container}>
+      <Image
+        source={require("../../assets/login/login.png")}
+        style={styles.img}
+      />
+      <Text variant="displaySmall" style={styles.title}>
+        Đăng nhập
+      </Text>
 
-            <View style={styles.forgotPasswordContainer}>
-              <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
-            </View>
-            <View style={styles.formContainer}>
-              <TextInput
-                mode="outlined"
-                label="Tên người dùng"
-                value={username}
-                onChangeText={setUsername}
-                autoCapitalize="none"
-                style={styles.input}
-              />
-              <TextInput
-                mode="outlined"
-                label="Mật khẩu"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                autoCapitalize="none"
-                style={styles.input}
-              />
-              <Button mode="contained" onPress={handleLogin}>
-                Đăng nhập
-              </Button>
-            </View>
-          </View>
-          <View style={styles.createAccountContainer}>
-            <Text style={styles.createAccountText}>Bạn chưa có tài khoản?</Text>
-            <TouchableRipple
-              onPress={() => {
-                navigation.navigate("SignUpScreen");
-              }}
-            >
-              <Text style={styles.createAccountLink}>Tạo mới tại đây</Text>
-            </TouchableRipple>
-          </View>
-          <Snackbar
-            visible={snackbarVisible}
-            onDismiss={handleSnackbarDismiss}
-            duration={5000}
-            onIconPress={handleSnackbarDismiss}
-          >
-            Sai tên đăng nhập hoặc mật khẩu
-          </Snackbar>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <View style={styles.forgotPasswordContainer}>
+        <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
+      </View>
+      <TextInput
+        mode="outlined"
+        label="Tên người dùng"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        style={styles.input}
+      />
+      <TextInput
+        mode="outlined"
+        label="Mật khẩu"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        autoCapitalize="none"
+        style={styles.input}
+      />
+      <Button mode="contained" onPress={handleLogin}>
+        Đăng nhập
+      </Button>
+      <TouchableOpacity style={styles.createAccountContainer}>
+      <Text variant="bodyMedium" style={styles.createAccountText}>Bạn chưa có tài khoản? </Text>
+        <TouchableRipple
+          onPress={() => {
+            navigation.navigate("SignUpScreen");
+          }}
+        >
+          <Text style={styles.createAccountLink}>Tạo mới ngay</Text>
+        </TouchableRipple>
+      </TouchableOpacity>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={handleSnackbarDismiss}
+        duration={5000}
+        onIconPress={handleSnackbarDismiss}
+      >
+        Sai tên đăng nhập hoặc mật khẩu
+      </Snackbar>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "85%",
     justifyContent: "center",
-    alignItems: "center",
+    paddingHorizontal: 16,
+    alignSelf: "center",
   },
   smaller: {
     flex: 0.8,
@@ -176,18 +160,19 @@ const styles = StyleSheet.create({
   input: {
     marginBottom: 15,
   },
-  createAccountContainer: {
-    flexDirection: "row",
-    position: "absolute",
-    bottom: 50,
-  },
   createAccountText: {
-    marginRight: 5,
+    textAlign: "center",
+    bottom: 0,
   },
   createAccountLink: {
     fontWeight: "bold",
-    fontSize: 16,
     textDecorationLine: "underline",
+  },
+  createAccountContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
   },
   footer: {
     position: "absolute",

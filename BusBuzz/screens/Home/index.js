@@ -1,30 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux';
-import { setDeparture, setSearchType, swapLocations } from '../../reducers/searchReducer';
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Text, Searchbar, Surface, IconButton } from "react-native-paper";
-import { StyleSheet, View, BackHandler } from "react-native";
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Lottie from 'lottie-react-native';
 import * as Location from 'expo-location';
 
-import data from './data';
+import { useSelector, useDispatch } from 'react-redux';
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Button, Text, Searchbar, Surface, IconButton } from "react-native-paper";
+import { StyleSheet, View, BackHandler } from "react-native";
+
+import { API_URL } from '@env';
+import { setDeparture, setSearchType, swapLocations } from '../../reducers/searchReducer';
 
 const HomeScreen = ({ navigation }) => {
+    // Prevent going back to the previous screen
     const handleBackButtonPress = () => {
-        // Return true to indicate that the back button press is handled and should not close the app
         return true;
     };
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButtonPress);
-
-        // Clean up the event listener when the component unmounts
         return () => backHandler.remove();
     }, []);
 
     const dispatch = useDispatch();
-
     const departure = useSelector((state) => state.search.departure.name.toString());
     const destination = useSelector((state) => state.search.destination.name.toString());
+    const [busStops, setBusStops] = useState([]);
+
+    useEffect(() => {
+        async function fetchBusStops() {
+            const busStopsUrl = `${API_URL}/busStops/`;
+            try {
+                const accessToken = await AsyncStorage.getItem('accessToken');
+                const response = await axios.get(busStopsUrl, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`, // Pass the access token in the Authorization header
+                    },
+                });
+                if (response.status === 200) {
+                    const fetchedBusStops = response.data;
+                    setBusStops(fetchedBusStops);
+                } else {
+                    console.log("Response status:", response.status);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchBusStops();
+    }, []);
 
     const handleSearchbarPress = (payload) => {
         if (payload === 'departure') {
@@ -35,17 +60,17 @@ const HomeScreen = ({ navigation }) => {
         navigation.navigate('SearchScreen');
     };
 
-    const getNearestStop = (latitude, longitude, data) => {
-        let minDistance
-        let nearestStop
-        data.forEach((stop) => {
-            const distance = Math.sqrt(Math.pow(latitude - stop.latitude, 2) + Math.pow(longitude - stop.longitude, 2))
+    const getNearestStop = (latitude, longitude) => {
+        let minDistance;
+        let nearestStop;
+        busStops.forEach((stop) => {
+            const distance = Math.sqrt(Math.pow(latitude - stop.latitude, 2) + Math.pow(longitude - stop.longitude, 2));
             if (minDistance === undefined || distance < minDistance) {
-                minDistance = distance
-                nearestStop = stop
+                minDistance = distance;
+                nearestStop = stop;
             }
         })
-        return nearestStop
+        return nearestStop;
     }
 
     const handleCurrentLocationPress = async () => {
@@ -62,9 +87,8 @@ const HomeScreen = ({ navigation }) => {
             console.log('Longitude:', longitude);
 
             // Perform any other actions with the location data
-            const nearestStop = getNearestStop(latitude, longitude, data);
+            const nearestStop = getNearestStop(latitude, longitude);
             dispatch(setDeparture(nearestStop));
-
         } catch (error) {
             console.log('Error getting location:', error);
         }
