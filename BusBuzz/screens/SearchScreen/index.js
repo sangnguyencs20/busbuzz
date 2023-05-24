@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar, List } from "react-native-paper";
 import { StyleSheet, FlatList } from "react-native";
@@ -9,20 +10,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { API_URL } from '@env';
 import { setDeparture, setDestination } from '../../reducers/searchReducer';
 
-const busStopsUrl = `${API_URL}/busStops/search/`;
-
 const SearchScreen = memo(({ navigation }) => {
     const dispatch = useDispatch();
-    const [busStops, setBusStops] = useState([]);
     const isDepartureSearch = useSelector((state) => state.search.isDepartureSearch);
+
+    const [busStops, setBusStops] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         async function fetchBusStops() {
+            const busStopsUrl = `${API_URL}/busStops/`;
             try {
                 const accessToken = await AsyncStorage.getItem('accessToken');
-                const response = await axios.get('http://192.168.1.7:3000/busStops/search/Đ', {
+                const response = await axios.get(busStopsUrl, {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${accessToken}`, // Pass the access token in the Authorization header
@@ -40,10 +41,6 @@ const SearchScreen = memo(({ navigation }) => {
         }
         fetchBusStops();
     }, []);
-
-    // useEffect(() => {
-    //     console.log(busStops);
-    // }, [busStops]);
 
     async function handleSearch(query) {
         try {

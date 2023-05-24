@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
+import { API_URL } from '@env';
 import BusCard from "../../components/BusCard";
 
 const SeachResultScreen = ({ navigation }) => {
@@ -48,10 +49,11 @@ const SeachResultScreen = ({ navigation }) => {
 
   useEffect(() => {
     async function fetchBusInfo() {
+      const searchUrl = `${API_URL}/routes/search`;
       try {
         const accessToken = await AsyncStorage.getItem("accessToken");
         const response = await axios.post(
-          "http://192.168.1.15:3000/routes/search",
+          searchUrl,
           searchData,
           {
             headers: {
@@ -85,7 +87,7 @@ const SeachResultScreen = ({ navigation }) => {
               depart={nameDeparture}
               arrive={nameDestination}
               time={time}
-              price={`${price} đ`}
+              price={`${price}đ`}
             />
           ))
         )}
