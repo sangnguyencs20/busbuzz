@@ -21,11 +21,11 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
 app.use(express.json());
 app.use(cors());
 
-const userRouter = require('./routes/userRoutes');
-const routeRouter = require('./routes/routeRoutes');
-const busRouter = require('./routes/busRoutes');
-const ticketRouter = require('./routes/ticketRoutes');
-const busStopRouter = require('./routes/busStopRoutes');
+const userRouter = require('./api/userRoutes');
+const routeRouter = require('./api/routeRoutes');
+const busRouter = require('./api/busRoutes');
+const ticketRouter = require('./api/ticketRoutes');
+const busStopRouter = require('./api/busStopRoutes');
 
 app.use('/users', verifyToken, userRouter);
 app.use('/routes', verifyToken, routeRouter);
