@@ -23,6 +23,7 @@ import AppbarComponent from "../../components/Appbar";
 
 const SeachResultScreen = ({ navigation }) => {
   const [BusInfo, setBusInfo] = useState([]);
+  const [error, setError] = useState(false);
 
   // retrive search data from redux
   const idDeparture = useSelector((state) => state.search.departure._id);
@@ -30,12 +31,6 @@ const SeachResultScreen = ({ navigation }) => {
 
   const nameDeparture = useSelector((state) => state.search.departure.name);
   const nameDestination = useSelector((state) => state.search.destination.name);
-
-  // For testing without Search data
-  // const idDeparture = "64699f8fa39bcf193c8be630";
-  // const idDestination = "64699f8fa39bcf193c8be635";
-  // const nameDeparture = "Đại học Bách Khoa";
-  // const nameDestination = "Trung tâm Thương mại Aeon Mall Tân Phú";
 
   const searchData = {
     start: idDeparture,
@@ -58,9 +53,11 @@ const SeachResultScreen = ({ navigation }) => {
           setBusInfo(BusInfo);
         } else {
           console.log("Response status:", response.status);
+          setError(true);
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
+        setError(true);
       }
     }
     fetchBusInfo();
@@ -68,8 +65,19 @@ const SeachResultScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <AppbarComponent navigation={navigation}/>
+      <AppbarComponent navigation={navigation} />
       <View style={styles.container}>
+        {error && (
+          <View style={styles.errorContainer}>
+            <Image
+              source={require("../../assets/search/error.png")}
+              style={styles.img}
+            />
+            <Text variant="displaySmall" style={styles.errorText}>Ôi không!</Text>
+            <Text style={styles.errorText}>Chúng tôi không thấy kết quả phù hợp với từ khoá của bạn</Text>
+            <Text style={styles.errorText}>Hãy thử lại với từ khoá khác nhé!</Text>
+          </View>
+        )}
         {BusInfo.map(({ _id, price, timeline, bus }, index) => (
           <TouchableRipple
             key={_id}
@@ -118,7 +126,7 @@ const savebusData = async (busNum, depart, arrive, time, price) => {
   try {
     const data = { busNum, depart, arrive, time, price };
     await AsyncStorage.setItem("busData", JSON.stringify(data));
-    console.log("Data saved successfully");
+    console.log("Save success: ", data);
   } catch (error) {
     console.log("Error saving data: ", error);
   }
@@ -129,6 +137,21 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     justifyContent: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    margin: 20,
+    justifyContent: "center",
+  },
+  img: {
+    marginBottom: 20,
+    alignSelf: "center",
+    height: 300,
+    width: "100%",
+  },
+  errorText: {
+    alignSelf: "flex-start",
+    marginBottom: 15,
   },
 });
 
