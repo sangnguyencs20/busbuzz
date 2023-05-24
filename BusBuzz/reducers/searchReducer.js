@@ -23,8 +23,26 @@ const searchSlice = createSlice({
     setDeparture: (state, action) => {
       state.departure = action.payload;
     },
+    clearDeparture: (state) => {
+      state.departure = {
+        _id: 0,
+        name: '',
+        address: '',
+        latitude: 0,
+        longitude: 0,
+      };
+    },
     setDestination: (state, action) => {
       state.destination = action.payload;
+    },
+    clearDestination: (state) => {
+      state.destination = {
+        _id: 0,
+        name: '',
+        address: '',
+        latitude: 0,
+        longitude: 0,
+      };
     },
     setSearchType: (state, action) => {
       state.isDepartureSearch = action.payload;
@@ -39,5 +57,12 @@ const searchSlice = createSlice({
   },
 });
 
-export const { setDeparture, setDestination, setSearchType, swapLocations } = searchSlice.actions;
+export const {
+  setDeparture,
+  clearDeparture,
+  setDestination,
+  clearDestination,
+  setSearchType,
+  swapLocations, 
+} = searchSlice.actions;
 export default searchSlice.reducer;

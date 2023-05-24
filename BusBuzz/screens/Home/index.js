@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Lottie from 'lottie-react-native';
 import * as Location from 'expo-location';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text, Searchbar, Surface, IconButton } from "react-native-paper";
-import { StyleSheet, View, BackHandler } from "react-native";
+import { StyleSheet, View, BackHandler, Image } from "react-native";
 
 import { API_URL } from '@env';
-import { setDeparture, setSearchType, swapLocations } from '../../reducers/searchReducer';
+import { setDeparture, setSearchType, swapLocations, clearDeparture, clearDestination } from '../../reducers/searchReducer';
 
 const HomeScreen = ({ navigation }) => {
     // Prevent going back to the previous screen
@@ -25,6 +24,8 @@ const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const departure = useSelector((state) => state.search.departure.name.toString());
     const destination = useSelector((state) => state.search.destination.name.toString());
+    const isSearchButtonDisabled = departure.length === 0 || destination.length === 0;
+    const searchButtonText = isSearchButtonDisabled ? '' : 'Tìm kiếm';
     const [busStops, setBusStops] = useState([]);
 
     useEffect(() => {
@@ -116,13 +117,7 @@ const HomeScreen = ({ navigation }) => {
                     onPress={() => navigation.navigate('SearchScreen')}
                 />
             </View>
-            {/* <View style={styles.lottieContainer}>
-                <Lottie
-                    source={require('../../assets/home/bus.json')}
-                    autoPlay
-                    style={styles.lottie}
-                />
-            </View> */}
+            <Image source={require('../../assets/home/trip.png')} style={{width: 255, height: 250}} />
             <View style={styles.form}>
                 <Text variant="displayMedium" style={{ marginVertical: 15 }}>Hôm nay bạn muốn đi đâu?</Text>
                 <Surface
@@ -145,6 +140,7 @@ const HomeScreen = ({ navigation }) => {
                         value={truncateInput(departure, 25)}
                         onIconPress={() => handleSearchbarPress('departure')}
                         onChangeText={(text) => { }}
+                        onClearIconPress={() => { dispatch(clearDeparture()) }}
                         style={styles.searchbar}
                     />
                     <View style={styles.label}>
@@ -160,14 +156,17 @@ const HomeScreen = ({ navigation }) => {
                         onIconPress={() => handleSearchbarPress('destination')}
                         value={truncateInput(destination, 25)}
                         onChangeText={(text) => { }}
+                        onClearIconPress={() => { dispatch(clearDestination()) }}
                         style={styles.searchbar}
                     />
                 </Surface>
                 <Button
                     mode="contained"
                     style={styles.searchbutton}
-                    onPress={() => navigation.navigate('SearchResultScreen')}>
-                    Tìm kiếm
+                    onPress={() => navigation.navigate('SearchResultScreen')}
+                    disabled={isSearchButtonDisabled}
+                >
+                    {searchButtonText}
                 </Button>
             </View>
         </SafeAreaView>
