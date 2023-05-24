@@ -67,7 +67,9 @@ const generateTokens = payload => {
     return { accessToken, refreshToken };
 };
 
-
+app.get('/', async (req, res) => {
+    res.json({ message: 'Welcome to BusBuzz API' });
+});
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
