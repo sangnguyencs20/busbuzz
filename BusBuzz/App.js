@@ -74,7 +74,7 @@ function App() {
                 disableGestures: true,
               }}
               initialRouteName={isFirstLaunch ? 'OnboardingScreen' : isLoggedIn ? 'HomeScreen' : 'LoginScreen'}
-            >
+            > 
               {isFirstLaunch && (
                 <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
               )}
