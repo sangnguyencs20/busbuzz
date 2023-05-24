@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const routes = await RouteModel.find();
+        const routes = await RouteModel.find().populate('places').populate('bus').exec();
         res.json(routes);
     } catch (err) {
         res.status(500).json({ message: err.message });
