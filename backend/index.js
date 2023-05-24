@@ -16,11 +16,11 @@ const options = {
             title: 'BusBuzz API',
             version: '1.0.0',
         },
-        servers: [
-            { url: 'http://localhost:3000' }
-            // Uncomment the line below for the production server
-            // { url: 'https://busbuzz-server.onrender.com/' }
-        ],
+        // servers: [
+        //     { url: 'http://localhost:3000' }
+        //     // Uncomment the line below for the production server
+        //     // { url: 'https://busbuzz-server.onrender.com/' }
+        // ],
         components: {
             securitySchemes: {
                 BearerAuth: {
