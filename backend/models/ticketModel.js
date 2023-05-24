@@ -8,7 +8,7 @@ const TicketSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Date,
         default: Date.now,
     },
-    qrcode: {
+    time: {
         type: String,
         required: [true, 'Please enter a qrcode'],
     },
@@ -19,7 +19,11 @@ const TicketSchema = new mongoose.Schema({
     endStop: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, 'Please enter an end stop'],
-    }
+    },
+    price: {
+        type: Number,
+        required: [true, 'Please enter a price'],
+    },
 })
 
 module.exports = mongoose.model('Ticket', TicketSchema);
