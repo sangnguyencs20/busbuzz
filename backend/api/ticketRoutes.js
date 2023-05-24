@@ -25,9 +25,10 @@ router.post('/', async (req, res) => {
     const ticket = new TicketModel({
         routeId: req.body.routeId,
         day: req.body.day,
-        qrcode: req.body.qrcode,
+        time: req.body.time,
         startStop: req.body.startStop,
         endStop: req.body.endStop,
+        price: req.body.price,
     });
     try {
         const newTicket = await ticket.save();
@@ -42,9 +43,10 @@ router.patch('/:id', async (req, res) => {
         const ticket = await TicketModel.findById(req.params.id);
         ticket.routeId = req.body.routeId;
         ticket.day = req.body.day;
-        ticket.qrcode = req.body.qrcode;
+        ticket.time = req.body.time;
         ticket.startStop = req.body.startStop;
         ticket.endStop = req.body.endStop;
+        ticket.price = req.body.price;
         const updatedTicket = await ticket.save();
         res.json(updatedTicket);
     } catch (err) {
