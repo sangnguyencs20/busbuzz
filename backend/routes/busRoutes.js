@@ -1,7 +1,6 @@
 const express = require('express');
 
 const BusModel = require('../models/busModel');
-
 const router = express.Router();
 
 router.get('/', async (req, res) => {

@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const route = await RouteModel.findById(req.params.id);
+        const route = await RouteModel.findById(req.params.id).populate('places').populate('bus').exec();
         res.json(route);
     } catch (err) {
         res.status(500).json({ message: err.message });

@@ -9,9 +9,14 @@ const RouteSchema = new mongoose.Schema({
         required: [true, 'Please enter a timeline'],
     },
     places: {
-        type: [{ type: mongoose.Schema.Types.String, ref: 'BusStop'}],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BusStop'}],
 
         required: [true, 'Please enter a places'],
+    },
+    bus: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bus',
+        required: [true, 'Please enter a bus'],
     }
 });
 

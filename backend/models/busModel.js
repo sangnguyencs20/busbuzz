@@ -7,6 +7,11 @@ const BusSchema = new mongoose.Schema({
     timeToStart: {
         type: [mongoose.Schema.Types.String],
         required: [true, 'Please enter a time to start'],
+    },
+    number: {
+        type: Number,
+        unique: true,
+        required: [true, 'Please enter a number'],
     }
 })
 
