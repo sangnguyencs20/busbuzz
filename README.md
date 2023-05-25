@@ -50,10 +50,6 @@ To install Bus Buzz on your Android device, download the APK file from the link 
 
 [Download Bus Buzz APK](https://your-app-download-url.com)
 
-## Screenshots
-
-![Bus Buzz Screenshots](./screenshots.png)
-
 ## Feedback and Support
 
 We welcome your feedback and suggestions to improve Bus Buzz. If you encounter any issues or have any questions, please don't hesitate to contact our support team at support@busbuzz.com.
