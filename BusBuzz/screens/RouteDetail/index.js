@@ -75,8 +75,8 @@ const RouteDetailScreen = ({ navigation }) => {
         <BusStopList busStopList={busStopList} />
 
         {/* need navigation handler */}
-        <Button style={styles.btn} mode="contained">
-          Thanh toán
+        <Button style={styles.btn} mode="contained" onPress={() => navigation.navigate("Payment")}>
+          Đặt vé
         </Button>
       </View>
     </ScrollView>
@@ -86,7 +86,6 @@ const RouteDetailScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
     justifyContent: "center",
   },
   errorContainer: {

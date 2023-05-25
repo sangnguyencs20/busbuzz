@@ -7,6 +7,7 @@ import {
   TouchableRipple,
   Snackbar,
 } from "react-native-paper";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +18,6 @@ import AppbarComponent from "../../components/Appbar";
 
 const SeachResultScreen = ({ navigation }) => {
   const [BusInfo, setBusInfo] = useState([]);
-  const [selectedBusID, setSelectedBusID] = useState("");
   const [error, setError] = useState(false);
 
   // retrive search data from redux
@@ -30,7 +30,7 @@ const SeachResultScreen = ({ navigation }) => {
     start: idDeparture,
     end: idDestination,
   };
-
+  
   useEffect(() => {
     async function fetchBusInfo() {
       const searchUrl = `${API_URL}/routes/search`;
@@ -82,10 +82,10 @@ const SeachResultScreen = ({ navigation }) => {
           <TouchableRipple
             key={_id}
             onPress={() => {
-              setSelectedBusID(_id);
               savePlacesToStorage(places);
               savebusData(
                 //Save bus data upon click
+                bus._id,
                 bus.number,
                 nameDeparture,
                 nameDestination,
@@ -135,9 +135,9 @@ const savePlacesToStorage = async (places) => {
 };
 
 //Save bus data for further use
-const savebusData = async (busNum, depart, arrive, time, price) => {
+const savebusData = async (routeId, busNum, depart, arrive, time, price) => {
   try {
-    const data = { busNum, depart, arrive, time, price };
+    const data = {routeId, busNum, depart, arrive, time, price };
     await AsyncStorage.setItem("busData", JSON.stringify(data));
   } catch (error) {
     console.log("Error saving data: ", error);

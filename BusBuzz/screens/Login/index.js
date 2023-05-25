@@ -49,6 +49,7 @@ const LoginScreen = ({ navigation }) => {
       if (response.status === 200) {
         const tokens = response.data;
         console.log("ATokens:", tokens.accessToken);
+        console.log("UserId:", tokens.user._id);
         storeTokens(tokens);
         
         //Lưu thông tin user fullName

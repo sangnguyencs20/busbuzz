@@ -13,71 +13,76 @@ import {
   TouchableRipple,
   Snackbar,
 } from "react-native-paper";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-
 import { API_URL } from "@env";
+
 import AppbarComponent from "../../components/Appbar";
-import BusCard from "../../components/BusCard";
-import BusStopList from "../../components/BusStopCard";
+import UserCard from "../../components/UserCard";
+import TicketCard from "../../components/TicketCard";
 
 const UserScreen = ({ navigation }) => {
-  const [busData, setBusData] = useState({});
-  const [busStopList, setbusStopList] = useState({});
+  const [ticketsList, setTicketsList] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getData();
-      const busStopListdata = await getPlacesFromStorage();
-      setBusData(data);
-      if (busStopListdata !== null) {
-        setbusStopList(busStopListdata);
+    async function getTicketsByUserId() {
+      const searchUrl = `${API_URL}/tickets/getTicketsByUserId`;
+      try {
+        const accessToken = await AsyncStorage.getItem("accessToken");
+        const userId = await AsyncStorage.getItem("userID");
+        console.log("User ID:", userId);
+        const API_body = {
+          userId: userId,
+        };
+        const response = await axios.post(searchUrl, API_body, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.status === 200) {
+          const data = response.data;
+          data.reverse();
+          setTicketsList(data);
+        } else {
+          console.log("Response status:", response.status);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
-    fetchData();
+    getTicketsByUserId();
   }, []);
 
-  const getData = async () => {
-    try {
-      const data = await AsyncStorage.getItem("busData");
-      if (data !== null) {
-        const { busNum, depart, arrive, time, price } = JSON.parse(data);
-        return { busNum, depart, arrive, time, price };
-      }
-    } catch (error) {
-      console.log("Error retrieving data: ", error);
-    }
-  };
-
-  const getPlacesFromStorage = async () => {
-    try {
-      const places = await AsyncStorage.getItem("selectedBusPlaces");
-      if (places !== null) {
-        return JSON.parse(places);
-      }
-    } catch (error) {
-      console.log("Error getting places from AsyncStorage: ", error);
-    }
-  };
+  console.log("Tickets list:", ticketsList.reverse());
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <AppbarComponent navigation={navigation} />
-        <BusCard
-          busNum={busData.busNum}
-          depart={busData.depart}
-          arrive={busData.arrive}
-          time={busData.time}
-          price={busData.price}
-        />
-        <BusStopList busStopList={busStopList} />
-
-        {/* need navigation handler */}
-        <Button style={styles.btn} mode="contained">
-          Thanh toán
+        <UserCard navigation={navigation} />
+        <Button
+          style={styles.btn}
+          mode="contained"
+          onPress={() => setTicketsList(ticketsList.slice().reverse())}
+        >
+          Sắp xếp
         </Button>
+        {ticketsList
+          .reverse()
+          .map(({ _id, routeId, day, startStop, endStop, price, status }) => (
+            <TicketCard
+              key={_id}
+              routeId={routeId}
+              startStopId={startStop}
+              endStopId={endStop}
+              time={day}
+              price={price}
+              status={status}
+            />
+          ))}
       </View>
     </ScrollView>
   );
@@ -86,26 +91,11 @@ const UserScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
     justifyContent: "center",
   },
-  errorContainer: {
-    flex: 1,
-    margin: 20,
-    justifyContent: "center",
-  },
-  img: {
-    marginBottom: 20,
-    alignSelf: "center",
-    height: 300,
-    width: "100%",
-  },
-  errorText: {
-    alignSelf: "flex-start",
-    marginBottom: 15,
-  },
+
   btn: {
-    margin: 20,
+    marginHorizontal: 20,
   },
 });
 

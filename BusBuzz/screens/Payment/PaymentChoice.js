@@ -1,11 +1,12 @@
 import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Card, Text, IconButton } from "react-native-paper";
+import { Card, Text, IconButton, TouchableRipple } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AppbarComponent from "../../components/Appbar";
 
 const paymentCard = (paymentName, partner, img) => {
   return (
-    <Card mode="contained">
+    <Card mode="contained" style = {styles.card}>
       <View style={styles.cardContainer}>
         <View style={styles.cardLeft}>
           <Text variant="titleMedium">{paymentName}</Text>
@@ -44,26 +45,19 @@ const PaymentChoice = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <IconButton
-        style={styles.goBack}
-        icon="arrow-left"
-        size={30}
-        onPress={() => {
-          navigation.navigate("Payment");
-        }}
-      />
+      <AppbarComponent navigation={navigation} />
       <View style={styles.title}>
         <Text variant="headlineMedium">Chọn phương thức</Text>
       </View>
       <View style={styles.paymentList}>
         {paymentList.map((payment) => {
           return (
-            <TouchableOpacity style={{marginVertical: "5%"}}
+            <TouchableRipple style={{marginVertical: "5%", borderRadius: 25,}}
               key={payment.paymentName}
               onPress={() => navigation.navigate("Payment")}
             >
               {paymentCard(payment.paymentName, payment.partner, payment.img)}
-            </TouchableOpacity>
+            </TouchableRipple>
           );
         })}
       </View>
@@ -77,7 +71,12 @@ const styles = StyleSheet.create({
     width: 350,
     paddingVertical: "3%",
     flexDirection: "row",
-    borderRadius: 15,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  card: {
+    borderRadius: 25,
     borderWidth: 1,
     borderColor: "#ccc",
   },
@@ -95,20 +94,14 @@ const styles = StyleSheet.create({
   //Container
   container: {
     flex: 1,
-    alignItems: "center",
-  },
-  goBack: {
-    position: "absolute",
-    top: "5%",
-    left: "5%",
   },
   title: {
-    marginVertical: "10%",
+    alignSelf: "center",
+    marginVertical: 15,
   },
   paymentList: {
     width: "100%",
     alignItems: "center",
-    // flexDirection: "column",
   },
 });
 
