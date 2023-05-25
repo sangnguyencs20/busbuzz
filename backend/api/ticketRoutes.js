@@ -19,10 +19,10 @@
  *           type: Date
  *           description: The day of the ticket
  *         startStop:
- *           type: string
+ *           type: ObjectId
  *           description: The starting stop of the ticket
  *         endStop:
- *           type: string
+ *           type: ObjectId
  *           description: The ending stop of the ticket
  *         price:
  *           type: number
@@ -221,6 +221,20 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+
+
+
+/**
+ * @swagger
+ * /tickets/getTicketsByUserId:
+ *  post:
+ *   summary: Get all tickets by user ID
+ *   tags: [Tickets]
+ *   requestBody:
+ *    required: true
+ *   content:
+ *    application/json:
+ */
 
 router.post('/getTicketsByUserId', async (req, res) => {
     try {

@@ -206,40 +206,4 @@ router.delete('/:id', async (req, res) => {
 })
 
 
-/**
- * @swagger
- * /users/{id}/ticket:
- *   get:
- *     summary: Get user's ticket by ID
- *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: ID of the user
- *         schema:
- *           type: string
- *     responses:
- *       202:
- *         description: User's ticket retrieved successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- */
-router.get('/:id/ticket', async (req, res) => {
-    try {
-        const user = await ticketModel.findById(req.params.id);
-        if(user === null){
-            res.status(204).json({ message: 'No user found' });
-        }
-        else res.status(202).json(user.ticket);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-})
-
-
 module.exports = router;

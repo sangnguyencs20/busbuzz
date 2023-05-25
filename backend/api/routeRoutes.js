@@ -21,7 +21,7 @@
  *         places:
  *           type: array
  *           items:
- *             type: string
+ *             type: ObjectId
  *           description: The places covered by the route
  *       required:
  *         - price
