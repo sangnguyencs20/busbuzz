@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Provider } from 'react-redux';
-import store from './store';
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Provider } from "react-redux";
+import store from "./store";
 
 //Our beloved RNP, of course!
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider } from "react-native-paper";
 
 // For navigation purpose
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //For theme
-import LightTheme from './assets/theme/LightTheme';
-import DarkTheme from './assets/theme/DarkTheme';
+import LightTheme from "./assets/theme/LightTheme";
+import DarkTheme from "./assets/theme/DarkTheme";
 
 // Onboarding screens
-import OnboardingScreen from './screens/Onboarding/Onboarding';
+import OnboardingScreen from "./screens/Onboarding/Onboarding";
 
 // Authentication screens
-import SignUpScreen from './screens/Signup';
-import LoginScreen from './screens/Login';
+import SignUpScreen from "./screens/Signup";
+import LoginScreen from "./screens/Login";
 
 //App screens
-import HomeScreen from './screens/Home';
-import SearchScreen from './screens/SearchScreen';
-import SeachResultScreen from './screens/SearchResult';
-import RouteDetailScreen from './screens/RouteDetail';
+import HomeScreen from "./screens/Home";
+import SearchScreen from "./screens/SearchScreen";
+import SeachResultScreen from "./screens/SearchResult";
+import RouteDetailScreen from "./screens/RouteDetail";
 
-import UserScreen from './screens/User';
-import SettingsScreen from './screens/Settings';
+import UserScreen from "./screens/User";
+import SettingsScreen from "./screens/Settings";
 
-import Payment from './screens/Payment/Payment';
-import PaymentChoice from './screens/Payment/PaymentChoice';
-import PaymentSuccess from './screens/Payment/PaymentSuccess';
+import Payment from "./screens/Payment/Payment";
+import PaymentChoice from "./screens/Payment/PaymentChoice";
+import PaymentSuccess from "./screens/Payment/PaymentSuccess";
 
 const clearAsyncStorage = async () => {
   try {
     await AsyncStorage.clear();
-    console.log('AsyncStorage cleared successfully.');
+    console.log("AsyncStorage cleared successfully.");
   } catch (error) {
-    console.log('Failed to clear AsyncStorage.', error);
+    console.log("Failed to clear AsyncStorage.", error);
   }
 };
 
@@ -49,15 +49,17 @@ function App() {
 
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const theme = isDarkMode ? DarkTheme : LightTheme;
 
   useEffect(() => {
-    AsyncStorage.getItem('accessToken').then((token) => {
+    AsyncStorage.getItem("accessToken").then((token) => {
       if (token) {
         setIsLoggedIn(true); // Set login status to true if access token exists
       }
-      AsyncStorage.getItem('alreadyLaunched').then((value) => {
+      AsyncStorage.getItem("alreadyLaunched").then((value) => {
         if (value === null) {
-          AsyncStorage.setItem('alreadyLaunched', 'true');
+          AsyncStorage.setItem("alreadyLaunched", "true");
           setIsFirstLaunch(true);
         } else {
           setIsFirstLaunch(false);
@@ -77,10 +79,19 @@ function App() {
                 animationEnabled: true,
                 disableGestures: true,
               }}
-              initialRouteName={isFirstLaunch ? 'OnboardingScreen' : isLoggedIn ? 'HomeScreen' : 'LoginScreen'}
-            > 
+              initialRouteName={
+                isFirstLaunch
+                  ? "OnboardingScreen"
+                  : isLoggedIn
+                  ? "HomeScreen"
+                  : "LoginScreen"
+              }
+            >
               {isFirstLaunch && (
-                <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+                <Stack.Screen
+                  name="OnboardingScreen"
+                  component={OnboardingScreen}
+                />
               )}
 
               <Stack.Screen name="LoginScreen" component={LoginScreen} />
@@ -89,11 +100,21 @@ function App() {
               <Stack.Screen name="HomeScreen" component={HomeScreen} />
 
               <Stack.Screen name="SearchScreen" component={SearchScreen} />
-              <Stack.Screen name="SearchResultScreen" component={SeachResultScreen} />
-              <Stack.Screen name="RouteDetailScreen" component={RouteDetailScreen} />
+              <Stack.Screen
+                name="SearchResultScreen"
+                component={SeachResultScreen}
+              />
+              <Stack.Screen
+                name="RouteDetailScreen"
+                component={RouteDetailScreen}
+              />
 
               <Stack.Screen name="UserScreen" component={UserScreen} />
-              <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+              <Stack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                initialParams={{ isDarkMode, setIsDarkMode }}
+              />
 
               <Stack.Screen name="Payment" component={Payment} />
               <Stack.Screen name="PaymentChoice" component={PaymentChoice} />
@@ -104,6 +125,6 @@ function App() {
       </Provider>
     )
   );
-};
+}
 
 export default App;

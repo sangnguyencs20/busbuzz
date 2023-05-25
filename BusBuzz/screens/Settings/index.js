@@ -5,14 +5,16 @@ import { List, Divider, Button, useTheme, Appbar } from "react-native-paper";
 
 import { useDispatch } from "react-redux";
 import AppbarComponent from "../../components/Appbar";
-import {
-  clearDeparture,
-  clearDestination,
-} from "../../reducers/searchReducer";
+import { clearDeparture, clearDestination } from "../../reducers/searchReducer";
+
+import DarkTheme from "../../assets/theme/DarkTheme";
+import LightTheme from "../../assets/theme/LightTheme";
 
 const SettingsScreen = ({ navigation, isDarkMode, setIsDarkMode }) => {
   const dispatch = useDispatch();
-  const { colors } = useTheme();
+
+  // Xác định theme hiện tại dựa trên giá trị isDarkMode
+  const theme = isDarkMode ? DarkTheme : LightTheme;
 
   async function deleteToken() {
     try {
@@ -33,24 +35,14 @@ const SettingsScreen = ({ navigation, isDarkMode, setIsDarkMode }) => {
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
-    setBackgroundColor(isDarkMode ? colors.surface : colors.background);
   };
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: colors.background }]}
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
       <AppbarComponent navigation={navigation} />
-      <List.Section>
-        <List.Subheader>Settings</List.Subheader>
-        <List.Item
-          title="Dark Mode"
-          left={(props) => <List.Icon {...props} icon="weather-night" />}
-          right={() => (
-            <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
-          )}
-        />
-      </List.Section>
+      
       <Divider />
       <Button mode="contained" onPress={handleLogout}>
         Logout

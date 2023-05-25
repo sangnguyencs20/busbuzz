@@ -114,10 +114,10 @@ const HomeScreen = ({ navigation }) => {
                     icon="account"
                     size={30}
                     style={{ position: 'absolute', right: 5, }}
-                    onPress={() => navigation.navigate('SearchScreen')}
+                    onPress={() => navigation.navigate('UserScreen')}
                 />
             </View>
-            <Image source={require('../../assets/home/trip.png')} style={{width: 255, height: 250}} />
+            <Image source={require('../../assets/home/trip.png')} style={{width: 150, height: 145}} />
             <View style={styles.form}>
                 <Text variant="displayMedium" style={{ marginVertical: 15 }}>Hôm nay bạn muốn đi đâu?</Text>
                 <Surface
