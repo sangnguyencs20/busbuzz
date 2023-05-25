@@ -24,6 +24,10 @@ const TicketSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please enter a price'],
     },
+    status: {
+        type: Boolean,
+        default: false,
+    }
 })
 
 module.exports = mongoose.model('Ticket', TicketSchema);
