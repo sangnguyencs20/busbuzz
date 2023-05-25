@@ -18,8 +18,32 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkM
 }
 
 ###
+GET http://localhost:3000/tickets
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg1MDAzMzA1LCJleHAiOjE2ODUwODk3MDV9.cEPC0z9psbrdk0iLoIVoTqxpvCHpy6XtnLGb95qDriQ
 
+###
+POST http://localhost:3000/tickets
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg1MDAzMzA1LCJleHAiOjE2ODUwODk3MDV9.cEPC0z9psbrdk0iLoIVoTqxpvCHpy6XtnLGb95qDriQ
+Content-Type: application/json
 
+{
+  "routeId": "6461a31986ad133c1067312a",
+  "startStop": "64699f8fa39bcf193c8be631",
+  "endStop": "64699f8fa39bcf193c8be635",
+  "price": 10000,
+  "userId": "645b4f0d37926b086cd5b1b5"
+}
+
+###
+POST http://localhost:3000/tickets/getTicketsByUserId
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWI0ZjBkMzc5MjZiMDg2Y2Q1YjFiNSIsInVzZXJuYW1lIjoic3ZuIiwiaWF0IjoxNjg1MDAzMzA1LCJleHAiOjE2ODUwODk3MDV9.cEPC0z9psbrdk0iLoIVoTqxpvCHpy6XtnLGb95qDriQ
+Content-Type: application/json
+
+{
+  "userId": "645b4f0d37926b086cd5b1b5"
+}
+
+###
 POST http://localhost:3000/signup
 Content-Type: application/json
 

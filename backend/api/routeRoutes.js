@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
         if (routes.length === 0) {
             res.status(204).json({ message: 'No routes found' });
         }
-        res.status(200).json(routes);
+        else res.status(200).json(routes);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -95,7 +95,7 @@ router.get('/:id', async (req, res) => {
         if (route === null) {
             res.status(204).json({ message: 'No route found' });
         }
-        res.status(200).json(route);
+        else res.status(200).json(route);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -144,7 +144,7 @@ router.post('/search', async (req, res) => {
         if (routes.length === 0) {
             res.status(204).json({ message: 'No routes found' });
         }
-        res.status(200).json(routes);
+        else res.status(200).json(routes);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

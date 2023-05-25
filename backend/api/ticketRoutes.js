@@ -16,11 +16,8 @@
  *           type: string
  *           description: The ID of the route
  *         day:
- *           type: string
+ *           type: Date
  *           description: The day of the ticket
- *         time:
- *           type: string
- *           description: The time of the ticket
  *         startStop:
  *           type: string
  *           description: The starting stop of the ticket
@@ -30,13 +27,16 @@
  *         price:
  *           type: number
  *           description: The price of the ticket
+ *         userId:
+ *           type: ObjectId
+ *           description: The ID of the user
  *       required:
  *         - routeId
  *         - day
- *         - time
  *         - startStop
  *         - endStop
  *         - price
+ *         - userId
  */
 
 const express = require('express');
@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
         if (tickets.length === 0) {
             res.status(204).json({ message: 'No tickets found' });
         }
-        res.status(200).json(tickets);
+        else res.status(200).json(tickets);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -101,7 +101,7 @@ router.get('/:id', async (req, res) => {
         if (ticket === null) {
             res.status(204).json({ message: 'No ticket found' });
         }
-        res.status(200).json(ticket);
+        else res.status(200).json(ticket);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -132,10 +132,10 @@ router.post('/', async (req, res) => {
     const ticket = new TicketModel({
         routeId: req.body.routeId,
         day: req.body.day,
-        time: req.body.time,
         startStop: req.body.startStop,
         endStop: req.body.endStop,
         price: req.body.price,
+        userId: req.body.userId,
     });
     try {
         const newTicket = await ticket.save();
@@ -178,10 +178,10 @@ router.patch('/:id', async (req, res) => {
         const ticket = await TicketModel.findById(req.params.id);
         ticket.routeId = req.body.routeId;
         ticket.day = req.body.day;
-        ticket.time = req.body.time;
         ticket.startStop = req.body.startStop;
         ticket.endStop = req.body.endStop;
         ticket.price = req.body.price;
+        ticket.userId = req.body.userId;
         const updatedTicket = await ticket.save();
         res.status(202).json(updatedTicket);
     } catch (err) {
@@ -220,5 +220,18 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
+
+
+router.post('/getTicketsByUserId', async (req, res) => {
+    try {
+        const tickets = await TicketModel.find({ userId: req.body.userId });
+        if (tickets.length === 0) {
+            res.status(204).json({ message: 'No tickets found' });
+        }
+        else res.status(200).json(tickets);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
 
 module.exports = router;

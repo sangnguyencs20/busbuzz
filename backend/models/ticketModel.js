@@ -8,10 +8,6 @@ const TicketSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Date,
         default: Date.now,
     },
-    time: {
-        type: String,
-        required: [true, 'Please enter a time'],
-    },
     startStop: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, 'Please enter a start stop'],
@@ -27,6 +23,11 @@ const TicketSchema = new mongoose.Schema({
     status: {
         type: Boolean,
         default: false,
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'Please enter a user id'],
+        ref: 'User',
     }
 })
 

@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
         if (busStops.length === 0) {
             res.status(204).json({ message: 'No bus stops found' })
         }
-        res.status(200).json(busStops);
+        else res.status(200).json(busStops);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -97,7 +97,7 @@ router.get('/:id', async (req, res) => {
         if (busStop === null) {
             res.status(204).json({ message: 'No bus stop found' })
         }
-        res.status(200).json(busStop);
+        else res.status(200).json(busStop);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

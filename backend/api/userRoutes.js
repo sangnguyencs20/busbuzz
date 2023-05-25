@@ -30,6 +30,7 @@
 const express = require('express');
 
 const UserModel = require('../models/userModel');
+const ticketModel = require('../models/ticketModel');
 
 const router = express.Router();
 
@@ -230,11 +231,11 @@ router.delete('/:id', async (req, res) => {
  */
 router.get('/:id/ticket', async (req, res) => {
     try {
-        const user = await UserModel.findById(req.params.id);
+        const user = await ticketModel.findById(req.params.id);
         if(user === null){
             res.status(204).json({ message: 'No user found' });
         }
-        res.status(202).json(user.ticket);
+        else res.status(202).json(user.ticket);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
