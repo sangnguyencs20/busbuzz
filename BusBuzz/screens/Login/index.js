@@ -14,6 +14,7 @@ import {
   TouchableRipple,
   Snackbar,
 } from "react-native-paper";
+
 function showAlertModal(title, message) {
   Alert.alert(title, message);
 }
@@ -26,8 +27,9 @@ async function storeTokens(tokens) {
     if (tokens.refreshToken) {
       await AsyncStorage.setItem("refreshToken", tokens.refreshToken);
     }
-    console.log("Tokens stored successfully");
-    console.log("accessToken:", tokens.accessToken);
+    if (tokens.user._id) {
+      await AsyncStorage.setItem("userID", tokens.user._id);
+    }
   } catch (error) {
     console.error("Error storing tokens:", error);
   }
@@ -36,6 +38,7 @@ async function storeTokens(tokens) {
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+
   async function handleLogin() {
     try {
       const response = await axios.post(loginUrl, {
@@ -45,6 +48,7 @@ const LoginScreen = ({ navigation }) => {
 
       if (response.status === 200) {
         const tokens = response.data;
+        console.log("ATokens:", tokens.accessToken);
         storeTokens(tokens);
         
         //Lưu thông tin user fullName
@@ -101,7 +105,9 @@ const LoginScreen = ({ navigation }) => {
         Đăng nhập
       </Button>
       <TouchableOpacity style={styles.createAccountContainer}>
-      <Text variant="bodyMedium" style={styles.createAccountText}>Bạn chưa có tài khoản? </Text>
+        <Text variant="bodyMedium" style={styles.createAccountText}>
+          Bạn chưa có tài khoản?{" "}
+        </Text>
         <TouchableRipple
           onPress={() => {
             navigation.navigate("SignUpScreen");

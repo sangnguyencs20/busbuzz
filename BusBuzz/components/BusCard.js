@@ -20,7 +20,7 @@ const BusCard = ({busNum, depart, arrive, time, price}) => {
               {depart} - {arrive}
             </Paragraph>
             <View style={styles.divPara}>
-              <Text style={styles.paragraph}>{time}</Text>
+              <Text style={styles.price}>{time}</Text>
               <Text style={styles.price}>{price}</Text>
             </View>
           </Card.Content>

@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, Image, ScrollView } from "react-native";
 import {
   TextInput,
   Button,
@@ -23,12 +17,12 @@ import AppbarComponent from "../../components/Appbar";
 
 const SeachResultScreen = ({ navigation }) => {
   const [BusInfo, setBusInfo] = useState([]);
+  const [selectedBusID, setSelectedBusID] = useState("");
   const [error, setError] = useState(false);
 
   // retrive search data from redux
   const idDeparture = useSelector((state) => state.search.departure._id);
   const idDestination = useSelector((state) => state.search.destination._id);
-
   const nameDeparture = useSelector((state) => state.search.departure.name);
   const nameDestination = useSelector((state) => state.search.destination.name);
 
@@ -56,7 +50,7 @@ const SeachResultScreen = ({ navigation }) => {
           setError(true);
         }
       } catch (error) {
-        // console.error(error);
+        console.error(error);
         setError(true);
       }
     }
@@ -73,15 +67,23 @@ const SeachResultScreen = ({ navigation }) => {
               source={require("../../assets/search/error.png")}
               style={styles.img}
             />
-            <Text variant="displaySmall" style={styles.errorText}>Ôi không!</Text>
-            <Text style={styles.errorText}>Chúng tôi không thấy kết quả phù hợp với từ khoá của bạn</Text>
-            <Text style={styles.errorText}>Hãy thử lại với từ khoá khác nhé!</Text>
+            <Text variant="displaySmall" style={styles.errorText}>
+              Ôi không!
+            </Text>
+            <Text style={styles.errorText}>
+              Chúng tôi không thấy kết quả phù hợp với từ khoá của bạn
+            </Text>
+            <Text style={styles.errorText}>
+              Hãy thử lại với từ khoá khác nhé!
+            </Text>
           </View>
         )}
-        {BusInfo.map(({ _id, price, timeline, bus }, index) => (
+        {BusInfo.map(({ _id, price, timeline, bus, places }, index) => (
           <TouchableRipple
             key={_id}
-            onPress={() =>
+            onPress={() => {
+              setSelectedBusID(_id);
+              savePlacesToStorage(places);
               savebusData(
                 //Save bus data upon click
                 bus.number,
@@ -89,14 +91,15 @@ const SeachResultScreen = ({ navigation }) => {
                 nameDestination,
                 getNearestTimeline(timeline),
                 `${price}đ`
-              )
-            }
+              );
+              navigation.navigate("RouteDetailScreen");
+            }}
           >
             <BusCard
               busNum={bus.number}
               depart={nameDeparture}
               arrive={nameDestination}
-              time={timeline[0]}
+              time={getNearestTimeline(timeline)}
               price={`${price}đ`}
             />
           </TouchableRipple>
@@ -106,7 +109,8 @@ const SeachResultScreen = ({ navigation }) => {
   );
 };
 
-//helper function to get nearest time from timeline
+//helper function
+//to get the nearest timeline
 const getNearestTimeline = (timeline) => {
   const now = Date.now();
   let nearest = timeline[0];
@@ -121,12 +125,20 @@ const getNearestTimeline = (timeline) => {
   return nearest;
 };
 
+//Save Bus stop for RouteDetailScreen
+const savePlacesToStorage = async (places) => {
+  try {
+    await AsyncStorage.setItem("selectedBusPlaces", JSON.stringify(places));
+  } catch (error) {
+    console.log("Error saving places to AsyncStorage: ", error);
+  }
+};
+
 //Save bus data for further use
 const savebusData = async (busNum, depart, arrive, time, price) => {
   try {
     const data = { busNum, depart, arrive, time, price };
     await AsyncStorage.setItem("busData", JSON.stringify(data));
-    console.log("Save success: ", data);
   } catch (error) {
     console.log("Error saving data: ", error);
   }
@@ -135,7 +147,6 @@ const savebusData = async (busNum, depart, arrive, time, price) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
     justifyContent: "center",
   },
   errorContainer: {
