@@ -176,10 +176,13 @@ app.post('/signup', async (req, res) => {
             password: hashedPassword,
             fullName
         });
-        console.log(newUser)
+
         await newUser.save();
 
-        res.sendStatus(201);
+        const tokens = generateTokens(newUser);
+        updateRefreshToken(username, tokens.refreshToken);
+
+        return res.status(201).json({ ...tokens, newUser });
     } catch (error) {
         console.error(error);
         res.sendStatus(500);
