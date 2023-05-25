@@ -93,13 +93,9 @@ const updateRefreshToken = async (username, refreshToken) => {
 
 const generateTokens = payload => {
     const { id, username } = payload;
-    const accessToken = jwt.sign({ id, username }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1d'
-    });
+    const accessToken = jwt.sign({ id, username }, process.env.ACCESS_TOKEN_SECRET);
 
-    const refreshToken = jwt.sign({ id, username }, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: '7d'
-    });
+    const refreshToken = jwt.sign({ id, username }, process.env.REFRESH_TOKEN_SECRET);
 
     return { accessToken, refreshToken };
 };
