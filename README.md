@@ -42,7 +42,7 @@ To run the Bus Buzz app locally, follow the steps below:
 
 ## Server URL
 
-The Bus Buzz app server is hosted at: [https://your-server-url.com](https://your-server-url.com)
+The Bus Buzz app server is hosted at: [https://busbuzz-server.render.com](https://busbuzz-server.render.com)
 
 ## Download APK
 
